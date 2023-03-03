@@ -23,8 +23,9 @@ namespace BackendAPI.Models
         [Column(TypeName = "nvarchar(50)")]
         public Status PtojectStatus { get; set; }
 
+       
         public ICollection<Stage> Stages { get; set; } = new List<Stage>();
+      
 
-        public User User { get; set; } = null!;
     }
 }

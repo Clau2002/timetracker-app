@@ -16,7 +16,5 @@ namespace BackendAPI.Models
 
         [Required]
         public DateTime EndTime { get; set; }
-
-        public Stage Stage { get; set; } = null!;
     }
 }

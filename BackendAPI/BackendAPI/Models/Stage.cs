@@ -34,7 +34,5 @@ namespace BackendAPI.Models
         public DateTime Deadline { get; set; }
 
         public ICollection<TimeEntry> TimeEntries { get; set; } = new List<TimeEntry>();
-
-        public Project Project { get; set; } = null!;
     }
 }

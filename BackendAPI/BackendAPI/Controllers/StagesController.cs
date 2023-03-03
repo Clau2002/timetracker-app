@@ -37,6 +37,9 @@ namespace BackendAPI.Controllers
                 return NotFound();
             }
 
+            var timeEntries = _context.TimeEntries.Where(t => t.StageId.Equals(id)).ToList();
+            stage.TimeEntries = timeEntries;
+
             return stage;
         }
 

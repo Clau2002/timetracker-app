@@ -37,8 +37,24 @@ namespace BackendAPI.Controllers
                 return NotFound();
             }
 
+            var projects = _context.Projects.Where(p => p.UserId.Equals(id)).ToList();
+            user.Projects = projects;
+
             return user;
         }
+
+        //[HttpGet("{_id}")]
+        //public async Task<List<Project>> GetProjectsByUserId(int _id)
+        //{
+        //    var user = await _context.Users.FindAsync(_id);
+        //    var projects = _context.Projects.Where(p => p.UserId.Equals(_id)).ToList();
+
+        //    List<Project> result = new List<Project>();
+        //    foreach (var project in user.Projects)
+        //        result.Add(project);
+
+        //    return projects;
+        //}
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)

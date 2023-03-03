@@ -37,6 +37,9 @@ namespace BackendAPI.Controllers
                 return NotFound();
             }
 
+            var stages = _context.Stages.Where(s => s.ProjectId.Equals(id)).ToList();
+            project.Stages = stages;
+
             return project;
         }
 
