@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendAPI.Models;
 using BackendAPI.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace BackendAPI.Controllers
 {
@@ -42,19 +43,6 @@ namespace BackendAPI.Controllers
 
             return user;
         }
-
-        //[HttpGet("{_id}")]
-        //public async Task<List<Project>> GetProjectsByUserId(int _id)
-        //{
-        //    var user = await _context.Users.FindAsync(_id);
-        //    var projects = _context.Projects.Where(p => p.UserId.Equals(_id)).ToList();
-
-        //    List<Project> result = new List<Project>();
-        //    foreach (var project in user.Projects)
-        //        result.Add(project);
-
-        //    return projects;
-        //}
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
