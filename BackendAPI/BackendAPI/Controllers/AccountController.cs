@@ -1,6 +1,8 @@
 ﻿using BackendAPI.Data;
+using BackendAPI.DTO;
 using BackendAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -16,13 +18,15 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(string username, string password)
+        public async Task<ActionResult<User>> Register(RegisterDTO registerDTO)
         {
+            if (await UserExists(registerDTO.Username)) return BadRequest("Username not available, choose another one");
+
             using var hmac = new HMACSHA512();
             var user = new User
             {
-                UserName = username,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
+                UserName = registerDTO.Username.ToLower(),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password.ToLower())),
                 PasswordSalt = hmac.Key
             };
 
@@ -32,5 +36,9 @@ namespace BackendAPI.Controllers
             return user;
         }
 
+        private async Task<bool> UserExists(string username)
+        {
+            return await _context.Users.AnyAsync(u => u.UserName == username.ToLower());
+        }
     }
 }

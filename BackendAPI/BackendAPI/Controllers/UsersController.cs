@@ -60,7 +60,7 @@ namespace BackendAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (await UserExists(id))
                 {
                     return NotFound();
                 }
@@ -97,9 +97,9 @@ namespace BackendAPI.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private async Task<bool> UserExists(int id)
         {
-            return _context.Users.Any(u => u.Id == id);
+            return await _context.Users.AnyAsync(u => u.Id == id);
         }
     }
 }
