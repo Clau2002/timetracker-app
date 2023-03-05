@@ -12,7 +12,7 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StagesController : ControllerBase
+    public class StagesController : BaseControllerApi
     {
         private readonly DataContext _context;
 

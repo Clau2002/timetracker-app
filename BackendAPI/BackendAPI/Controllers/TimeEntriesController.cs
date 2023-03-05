@@ -13,7 +13,7 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TimeEntriesController : ControllerBase
+    public class TimeEntriesController : BaseControllerApi
     {
         private readonly DataContext _context;
 
