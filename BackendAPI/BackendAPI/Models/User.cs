@@ -9,7 +9,7 @@ namespace BackendAPI.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(50)]
         public string? UserName { get; set; }
 
