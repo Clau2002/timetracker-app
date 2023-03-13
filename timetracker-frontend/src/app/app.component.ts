@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Timetracker';
   users: any;
 
   constructor(private http: HttpClient){
@@ -15,7 +14,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get('https://localhost:7119/api/users').subscribe({
+    this.http.get('https://localhost:7119/api/projects').subscribe({
       next: response => this.users = response,
       error: error => console.log(error),
       complete: () => console.log('Request Completed')
