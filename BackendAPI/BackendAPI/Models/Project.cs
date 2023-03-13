@@ -21,7 +21,7 @@ namespace BackendAPI.Models
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public Status PtojectStatus { get; set; }
+        public Status ProjectStatus { get; set; }
 
        
         public ICollection<Stage> Stages { get; set; } = new List<Stage>();

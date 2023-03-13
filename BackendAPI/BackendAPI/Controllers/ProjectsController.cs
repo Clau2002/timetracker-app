@@ -22,9 +22,21 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
+        public async Task<ActionResult> GetProjects()
         {
-            return await _context.Projects.ToListAsync();
+            var projectsQuery = await(from projects in _context.Projects 
+                                 join users in _context.Users 
+                                 on projects.UserId equals users.Id select new
+            {
+                id = projects.Id,
+                userName = users.UserName,
+                name = projects.Name,
+                description = projects.Description,
+                projectStatus = projects.ProjectStatus
+
+            }).ToListAsync();
+
+            return Ok(projectsQuery);
         }
 
         [HttpGet("{id}")]
