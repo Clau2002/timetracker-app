@@ -14,11 +14,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get('https://localhost:7119/api/projects/1005').subscribe({
-      next: response => this.projects = response,
-      error: error => console.log(error),
-      complete: () => console.log('Request Completed')
-    });
+    // this.http.get('https://localhost:7119/api/projects/1005').subscribe({
+    //   next: response => this.projects = response,
+    //   error: error => console.log(error),
+    //   complete: () => console.log('Request Completed')
+    // });
   }
 
   loggedInBtn():void{

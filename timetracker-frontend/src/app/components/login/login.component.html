@@ -1,49 +1,58 @@
 <div class="outer">
-  <div class="container">
-      <div class="row">
-          <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 mx-auto">
-              <div class="panel border bg-white">
-                  <div class="panel-heading">
-                      <h3 class="pt-3 font-weight-bold">Login</h3>
-                  </div>
-                  <div class="panel-body p-3">
-                      <form>
-                          <div class="form-group pt-3">
-                              <div class="input-field">
-                                  <span class="fa fa-user p-2"></span>
-                                  <input type="text" placeholder="Username">
-                              </div>
-                          </div>
-                          <div class="form-group pt-3">
-                              <div class="input-field">
-                                  <span class="fa fa-lock p-2"></span>
-                                  <input [type]="type" placeholder="Password">
-                                  <span (click)="hideShowPassword()" class="fa fa-eye-slash"></span>
-                              </div>
-                          </div>
-                          <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Login</button>
-                          <div class="text-center pt-4 text-muted">
-                              Don't have an account? <a id="forget" routerLink="/register"
-                                  class="font-weight-bold">Register</a>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="mx-3 my-2 py-2 bordert">
-                      <div class="row">
-                          <div class="col-md-6">
-                              <button class="btn btn-block btn-socialbtn-github">
-                                  <span class="fa fa-github"></span> Sign in with Github
-                              </button>
-                          </div>
-                          <div class="col-md-6">
-                              <button class="btn btn-block btn-social btn-google">
-                                  <span class="fa fa-google"></span> Sign in with Google
-                              </button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 mx-auto">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Login</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="loginForm">
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input formControlName="username" type="text" placeholder="Username">
+                                </div>
+                            </div>
+                            <small
+                                *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')"
+                                class="text-danger">*Username is required</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input formControlName="password" [type]="type" placeholder="Password">
+                                    <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
+                                </div>
+                            </div>
+                            <small
+                                *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')"
+                                class="text-danger">*Password is required</small>
+                            <button (click)="onLogin()" type="submit"
+                                class="btn btn-primary btn-block mt-4 w-100">Login</button>
+                            <div class="text-center pt-4 text-muted">
+                                Don't have an account? <a id="forget" routerLink="/register"
+                                    class="font-weight-bold">Register</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mx-3 my-2 py-2 bordert">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-block btn-socialbtn-github">
+                                    <span class="fa fa-github"></span> Sign in with Github
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-block btn-social btn-google">
+                                    <span class="fa fa-google"></span> Sign in with Google
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

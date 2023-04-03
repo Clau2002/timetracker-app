@@ -5,12 +5,16 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = 'https://localhost:7119/api/';
+  private baseUrl:string = 'https://localhost:7119/api/';
 
   constructor(private http:HttpClient) { }
 
-  login(model: any){
-    return this.http.post(this.baseUrl + 'account/login', model)
+  login(user: any){
+    return this.http.post(this.baseUrl + 'account/login', user)
+  }
+
+  register(user: any){
+    return this.http.post(this.baseUrl + 'account/register', user)
   }
 
   getUsers(usersList:any){
