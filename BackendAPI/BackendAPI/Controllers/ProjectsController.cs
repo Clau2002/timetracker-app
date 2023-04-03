@@ -24,36 +24,53 @@ namespace BackendAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetProjects()
         {
-            var projectsQuery = await(from projects in _context.Projects 
-                                 join users in _context.Users 
-                                 on projects.UserId equals users.Id select new
-            {
-                id = projects.Id,
-                userName = users.UserName,
-                name = projects.Name,
-                description = projects.Description,
-                projectStatus = projects.ProjectStatus
+            var projectsQuery = await (from projects in _context.Projects
+                                       join users in _context.Users
+                                       on projects.UserId equals users.Id select new
+                                       {
+                                           id = projects.Id,
+                                           userName = users.UserName,
+                                           name = projects.Name,
+                                           description = projects.Description,
+                                           projectStatus = projects.ProjectStatus
 
-            }).ToListAsync();
+                                       }).ToListAsync();
 
             return Ok(projectsQuery);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProject(int id)
+        public async Task<ActionResult> GetProjectsByUserId(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
-
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            var stages = _context.Stages.Where(s => s.ProjectId.Equals(id)).ToList();
-            project.Stages = stages;
-
-            return project;
+            var projectsQuery = await (from user in _context.Users
+                                       join projects in _context.Projects
+                                       on user.Id equals projects.UserId
+                                       where user.Id == id
+                                       select new
+                                       {
+                                           id = projects.Id,
+                                           name = projects.Name,
+                                           description = projects.Description,
+                                           projectStatus = projects.ProjectStatus
+                                       }).ToListAsync();
+            return Ok(projectsQuery);
         }
+
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Project>> GetProject(int id)
+        //{
+        //    var project = await _context.Projects.FindAsync(id);
+
+        //    if (project == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var stages = _context.Stages.Where(s => s.ProjectId.Equals(id)).ToList();
+        //    project.Stages = stages;
+
+        //    return project;
+        //}
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProject(int id, Project project)

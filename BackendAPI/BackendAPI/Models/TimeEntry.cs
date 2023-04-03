@@ -12,7 +12,7 @@ namespace BackendAPI.Models
         public int StageId { get; set; }
 
         [Required]
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; } = DateTime.Now;
 
         [Required]
         public DateTime EndTime { get; set; }
