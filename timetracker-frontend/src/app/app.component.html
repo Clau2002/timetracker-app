@@ -1,4 +1,3 @@
-
 <!-- <ul>
   <li *ngFor="let user of users">
     {{user.id}} - {{user.userName}}
@@ -6,22 +5,13 @@
 </ul> -->
 
 <app-navbar></app-navbar>
-
 <div class="container">
-  <!-- <div class="row">
-    <div class="col-6">
-      <img src="" alt="Logo" class="img-fluid">
-    </div>
-    <div class="col-6 text-end">
-      <a routerLink="/profile">User Profile</a>
-    </div>
-  </div> -->
   <div class="row mt-3">
     <div class="col-6">
       <a routerLink="/create-project" class="btn btn-primary">Create Project</a>
     </div>
     <div class="col-6 text-end">
-      <a routerLink="/projects" class="btn btn-outline-primary">View Projects</a>
+      <a routerLink="/projects" class="btn btn-outline-primary" (click)="loggedInBtn()">View Projects</a>
     </div>
   </div>
   <div class="row mt-4">
@@ -30,17 +20,15 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>User</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Description</th>
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let project of users">
+        <tbody *ngIf="loggedIn">
+          <tr *ngFor="let project of projects">
             <td>{{project.id}}</td>
-            <td>{{project.userName}}</td>
             <td>{{project.name}}</td>
             <td>{{project.description}}</td>
             <td>{{project.projectStatus}}</td>
@@ -49,13 +37,7 @@
       </table>
     </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-6">
-      <a routerLink="/about">About</a>
-    </div>
-    <div class="col-6 text-end">
-      <a routerLink="/contact">Contact Us</a>
-    </div>
-  </div>
 </div>
 
+
+<router-outlet></router-outlet>
