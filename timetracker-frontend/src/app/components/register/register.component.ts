@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validate-form';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   eyeIcon: string = "fa-eye-slash";
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private account: AccountService, private router: Router) { }
+  constructor(private fb: FormBuilder, private account: AccountService, private router: Router, private toast: NgToastService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -42,19 +43,21 @@ export class RegisterComponent implements OnInit {
   onRegister() {
     if (this.registerForm.valid) {
       this.account.register(this.registerForm.value).subscribe({
-        next: (res) => {
+        next: (res:any) => {
           console.log(res);
           this.registerForm.reset();
           this.router.navigate(['/login']);
+          this.toast.success({detail: "Register Successful", summary:res.message, duration: 3000});
         },
-        error: (err) => {
-          alert(err?.error.message);
+        error: (err:any) => {
+          this.toast.error({detail: "ERROR", summary:"Username already exists", duration: 3000});
+          console.log(err);
         }
       })
     }
     else {
       ValidateForm.validateAllFormFields(this.registerForm);
-      alert("Invalid Form");
+      this.toast.error({detail: "INVALID", summary:"Invalid Form", duration: 3000});
     }
   }
 }

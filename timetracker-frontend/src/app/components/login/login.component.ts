@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validate-form';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   eyeIcon: string = "fa-eye-slash";
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private account: AccountService) { }
+  constructor(private fb: FormBuilder, private account: AccountService, private router: Router, private toast: NgToastService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -40,17 +42,21 @@ export class LoginComponent implements OnInit {
   onLogin() {
     if (this.loginForm.valid) {
       this.account.login(this.loginForm.value).subscribe({
-        next: (res) => {
+        next: (res: any) => {
           console.log(res);
+          this.loginForm.reset();
+          this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000 });
+          this.router.navigate(['navbar']);
         },
-        error: (err) => {
-          alert(err?.error.message);
+        error: (err: any) => {
+          this.toast.error({ detail: "ERROR", summary: "Something went wrong!", duration: 3000 });
+          console.log(err);
         }
       })
     }
     else {
       ValidateForm.validateAllFormFields(this.loginForm);
-      alert("Invalid Form");
+      this.toast.error({detail: "INVALID", summary:"Invalid Form", duration: 3000});
     }
   }
 }
