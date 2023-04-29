@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  [x: string]: any;
   projects: any;
   loggedIn = false;
   constructor(private http: HttpClient){

@@ -39,7 +39,7 @@ namespace BackendAPI.Controllers
             return Ok(projectsQuery);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult> GetProjectsByUserId(int id)
         {
             var projectsQuery = await (from user in _context.Users
@@ -53,6 +53,29 @@ namespace BackendAPI.Controllers
                                            description = projects.Description,
                                            projectStatus = projects.ProjectStatus
                                        }).ToListAsync();
+            return Ok(projectsQuery);
+        }
+
+        [HttpGet("username/{username}")]
+        public async Task<ActionResult> GetProjectsByUserName(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            if (user == null)
+            {
+                return NotFound(); // or some other error response
+            }
+            var userId = user.Id;
+
+            var projectsQuery = await (from projects in _context.Projects
+                                       where projects.UserId == userId
+                                       select new
+                                       {
+                                           id = projects.Id,
+                                           name = projects.Name,
+                                           description = projects.Description,
+                                           projectStatus = projects.ProjectStatus
+                                       }).ToListAsync();
+
             return Ok(projectsQuery);
         }
 
