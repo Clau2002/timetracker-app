@@ -11,7 +11,7 @@ namespace BackendAPI.Models
         
         public int UserId { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(50)]
         public string Name { get; set; }
 
@@ -19,7 +19,7 @@ namespace BackendAPI.Models
         [MaxLength(150)]
         public string Description { get; set; }
 
-        [Required]
+        //[Required]
         [Column(TypeName = "nvarchar(50)")]
         public Status ProjectStatus { get; set; }
 

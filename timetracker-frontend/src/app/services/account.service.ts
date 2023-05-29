@@ -1,23 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  private baseUrl:string = 'https://localhost:7119/api/';
-
   constructor(private http:HttpClient) { }
 
-  login(user: any){
-    return this.http.post(this.baseUrl + 'account/login', user)
+  login(user: User){
+    return this.http.post(environment.userManagement.baseUrl + 'account/login', user)
   }
 
   register(user: any){
-    return this.http.post(this.baseUrl + 'account/register', user)
+    return this.http.post(environment.userManagement.baseUrl + 'account/register', user)
   }
 
   getUsers(usersList:any){
-    return this.http.get(this.baseUrl + 'users', usersList)
+    return this.http.get(environment.userManagement.baseUrl + 'users', usersList)
   }
 }

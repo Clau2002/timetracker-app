@@ -17,7 +17,11 @@ export class LoginComponent implements OnInit {
   eyeIcon: string = "fa-eye-slash";
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService, private userService: UserService) { }
+  constructor(private fb: FormBuilder,
+              private auth: AuthService,
+              private router: Router,
+              private toast: NgToastService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -44,13 +48,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm.value).subscribe({
         next: (res: any) => {
+          console.log(this.loginForm.value);
           console.log(res);
           this.loginForm.reset();
           this.auth.storeToken(res.token);
-          this.userService.username = res.username;
+          this.userService.user.username = res.username;
           this.userService.projects = res.projects;
           this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000 });
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['sidebar']);
         },
         error: (err: any) => {
           this.toast.error({ detail: "ERROR", summary: "Something went wrong!", duration: 3000 });

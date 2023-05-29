@@ -23,28 +23,30 @@ namespace BackendAPI.Controllers
             return Ok(await _userRepository.GetUsersAsync());
         }
 
-        [HttpGet("{username}")]
+        [HttpGet("username/{username}")]
         public async Task<ActionResult<User>> GetUser(string username)
         {
             return await _userRepository.GetUserByUsernameAsync(username); 
         }
 
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<User>> GetUser(int id)
-        //{
-        //    var user = await _context.Users.FindAsync(id);
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<User>> GetUserById(int id)
+        {
+            return await _userRepository.GetUserByIdAsync(id);
 
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            //var user = await _context.Users.FindAsync(id);
 
-        //    var projects = _context.Projects.Where(p => p.UserId.Equals(id)).ToList();
-        //    user.Projects = projects;
+            //if (user == null)
+            //{
+            //    return NotFound();
+            //}
 
-        //    return user;
-        //}
+            //var projects = _context.Projects.Where(p => p.UserId.Equals(id)).ToList();
+            //user.Projects = projects;
+
+            //return user;
+        }
 
         //[HttpPut("{id}")]
         //public async Task<IActionResult> PutUser(int id, User user)

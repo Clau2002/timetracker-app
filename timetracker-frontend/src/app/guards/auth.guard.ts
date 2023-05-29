@@ -7,7 +7,9 @@ import { NgToastService } from 'ng-angular-popup';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private toast: NgToastService) { }
+  constructor(private authService: AuthService, 
+              private router: Router, 
+              private toast: NgToastService) { }
 
   canActivate(): boolean {
     if (this.authService.isLoggedIn()) {

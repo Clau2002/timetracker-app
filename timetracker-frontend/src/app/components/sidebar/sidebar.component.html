@@ -1,17 +1,28 @@
-<div class="bg-white" id="sidebar-wrapper">
-    <div class="bg-dark sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
-            class="fa fa-clock-o me-2"></i>Timetracker</div>
-    <div class="list-group list-group-flush my-3">
-        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
-                class="fa fa-tachometer me-2"></i>Dashboard</a>
-        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                class="fa-solid fa-diagram-project me-2"></i>Projects</a>
-        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                class="fa fa-chart-line me-2"></i>Analytics</a>
-        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                class="fa fa-paperclip me-2"></i>Reports</a>
-        <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
-                class="fa fa-power-off me-2"></i>Logout</a>
-    </div>
-</div>
+<mat-toolbar>
+        <h4>Timetracker</h4>
+        <mat-button-toggle value="left" aria-label="Text align left" (click)="opened = !opened">
+                <mat-icon>format_align_left</mat-icon>
+        </mat-button-toggle>
+        <div class="username">
+                {{ username }}
+        </div>
+</mat-toolbar>
 
+
+<mat-sidenav-container>
+        <mat-sidenav mode="over" [(opened)]="opened">
+                <mat-nav-list>
+                        <a mat-list-item routerLink="/dashboard">
+                                <mat-icon>dashboard</mat-icon> Dashboard
+                        </a>
+                        <button mat-list-item routerLink="/projects" (onclick)="onClickProjects()">Projects</button>
+                        <a mat-list-item routerLink="/tasks"><mat-icon>task</mat-icon>Tasks</a>
+                        <a mat-list-item routerLink="/reports"><mat-icon>bar_chart</mat-icon>Reports</a>
+                        <a mat-list-item routerLink="/settings"><mat-icon>settings</mat-icon>Settings</a>
+                        <a mat-list-item routerLink="/profile"><mat-icon>account_circle</mat-icon>Profile</a>
+                </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+                <router-outlet></router-outlet>
+        </mat-sidenav-content>
+</mat-sidenav-container>

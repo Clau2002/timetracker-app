@@ -1,0 +1,29 @@
+<div class="auth-wrapper">
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" class="form-wrapper">
+        <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Enter your username" type="username" name="username" ngModel [required]="true"
+                username>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter your password" type="password" name="password" ngModel [required]="true">
+        </mat-form-field>
+
+        <div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!authForm.valid">{{ isLoginMode ?
+                'Login':'Sign Up'}}</button>
+        </div>
+
+        <div>
+            <span>
+                {{
+                isLoginMode ? 'Don\'t have an account? ' : 'Already have an account?'
+                }}
+            </span>
+            <button mat-flat-button type="button" (click)="onSwitchMode()">{{ isLoginMode ? 'Sign Up' : 'Login'
+                }}</button>
+        </div>
+    </form>
+</div>

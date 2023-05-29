@@ -15,11 +15,16 @@ namespace BackendAPI.Data
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
+            var projects = _context.Projects.Where(p => p.UserId.Equals(id)).ToList();
+            user.Projects = projects;
+            return user;
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
+            //var projects = _context.Projects.Where(p => p.UserId.Equals(id)).ToList();
+            //user.Projects = projects;
             return await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
         }
 

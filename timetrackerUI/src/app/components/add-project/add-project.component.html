@@ -1,0 +1,55 @@
+<!-- <form (ngSubmit)="addProject()" #projectForm="ngForm" *ngIf="showAddProjectForm">
+    <mat-form-field appearance="fill">
+        <mat-label>Project Name</mat-label>
+        <input matInput required [(ngModel)]="newProject.name" name="name" placeholder="Enter project name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput required [(ngModel)]="newProject.description" name="description"
+            placeholder="Enter description"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input matInput required [(ngModel)]="newProject.projectStatus" name="status" placeholder="Enter status">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Stage</mat-label>
+        <input matInput required [(ngModel)]="newProject.stages" name="stage" placeholder="Enter stage">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!projectForm.valid">Add
+        Project</button>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+</form> -->
+
+
+<h1 mat-dialog-title>Add project</h1>
+<form (ngSubmit)="addProject()" #projectForm="ngForm">
+    <div mat-dialog-content>
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>User Id</mat-label>
+            <input matInput [(ngModel)]="newProject.userId" name="userId" placeholder="Enter userId">
+        </mat-form-field> -->
+        <mat-form-field appearance="fill">
+            <mat-label>Project Name</mat-label>
+            <input matInput [(ngModel)]="newProject.name" name="name" placeholder="Enter project name">
+        </mat-form-field>
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="newProject.description" name="description"
+                placeholder="Enter description"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Status</mat-label>
+            <input matInput [(ngModel)]="newProject.projectStatus" name="status" placeholder="Enter status">
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Stage</mat-label>
+            <input matInput [(ngModel)]="newProject.stages" name="stage" placeholder="Enter stage">
+        </mat-form-field> -->
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="newProject" type="submit" cdkFocusInitial color="primary"
+            [disabled]="!projectForm.valid">Add Project</button>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+    </div>
+</form>
