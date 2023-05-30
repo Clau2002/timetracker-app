@@ -24,7 +24,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("username/{username}")]
-        public async Task<ActionResult<User>> GetUser(string username)
+        public async Task<ActionResult<User>> GetUserByUsername(string username)
         {
             return await _userRepository.GetUserByUsernameAsync(username); 
         }
@@ -34,18 +34,12 @@ namespace BackendAPI.Controllers
         public async Task<ActionResult<User>> GetUserById(int id)
         {
             return await _userRepository.GetUserByIdAsync(id);
+        }
 
-            //var user = await _context.Users.FindAsync(id);
-
-            //if (user == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var projects = _context.Projects.Where(p => p.UserId.Equals(id)).ToList();
-            //user.Projects = projects;
-
-            //return user;
+        [HttpPut]
+        public async Task UpdateUser(User user)
+        {
+            await _userRepository.UpdateUserAsync(user);
         }
 
         //[HttpPut("{id}")]

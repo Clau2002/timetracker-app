@@ -33,6 +33,7 @@ export class AuthComponent {
             this.userService.user.username = res.username;
             // const serilizedUser = JSON.stringify(this.userService.user.username);
             localStorage.setItem('username', this.userService.user.username);
+            localStorage.setItem('userId', this.userService.user.id);
             // this.userService.getProjects = res.projects;
             this._snackBar.open('Login Successful', 'Dismiss', {
               duration: 3000,

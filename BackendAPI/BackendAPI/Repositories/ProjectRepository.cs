@@ -9,10 +9,12 @@ namespace BackendAPI.Data
     public class ProjectRepository : IProjectRepository
     {
         private readonly DataContext _context;
+        private StageRepository _stageRepository;
 
         public ProjectRepository(DataContext dataContext)
         {
             _context = dataContext;
+            _stageRepository = new StageRepository(dataContext);
         }
 
         public async Task<ProjectDTO> CreateProjectAsync(ProjectDTO projectDTO)
@@ -52,12 +54,45 @@ namespace BackendAPI.Data
 
         public async Task<Project> GetProjectByNameAsync(string name)
         {
-            return await _context.Projects.SingleOrDefaultAsync(p => p.Name == name);
+            var project = await _context.Projects.SingleOrDefaultAsync(p => p.Name == name);
+            if(project != null)
+            {
+                var stages = await _context.Stages.Where(s => s.ProjectId == project.Id).ToListAsync();
+                project.Stages = stages;
+            }
+
+            return project;
         }
 
-        public async Task<IEnumerable<Project>> GetProjectsAsync()
+        public async Task<ICollection<Project>> GetProjectsByUserIdAync(int userId)
         {
-            return await _context.Projects.ToListAsync();
+            var projectsQuery = await (from user in _context.Users
+                                       join project in _context.Projects
+                                       on user.Id equals project.UserId
+                                       where user.Id == userId
+                                       select new Project
+                                       {
+                                           Id = project.Id,
+                                           UserId = project.UserId,
+                                           Name = project.Name,
+                                           Description = project.Description,
+                                           ProjectStatus = project.ProjectStatus,
+                                           Stages = project.Stages
+                                       }).ToListAsync();
+
+            return projectsQuery;
+        }
+
+        public async Task<ICollection<Project>> GetProjectsAsync()
+        {
+            var projects = await _context.Projects.ToListAsync();
+            var projectsQuery = new List<Project>();
+            foreach (var project in projects)
+            {
+                projectsQuery.Add(GetProjectByIdAsync(project.Id).Result);
+            }
+
+            return projectsQuery;
         }
 
         public async Task<bool> SaveAll()

@@ -11,13 +11,13 @@ export class ProjectService {
 
   constructor(private http: HttpClient) { }
 
-  getProjects() {
-    return this.http.get(environment.userManagement.baseUrl + 'projects/id/1012');
+  getUserProjects() {
+    return this.http.get(environment.userManagement.baseUrl + 'projects/userId/' + localStorage.getItem('userId'));
   }
 
   createProject(project: Project) {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.post(environment.userManagement.baseUrl + 'projects/createProject', project, { headers });
+    // const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.post(environment.userManagement.baseUrl + 'projects/createProject', project);
   }
 
   // createProject(project: Project) {

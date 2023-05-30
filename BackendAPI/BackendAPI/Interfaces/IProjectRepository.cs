@@ -8,8 +8,9 @@ namespace BackendAPI.Interfaces
     {
         Task<Project> GetProjectByIdAsync(int id);
         Task<Project> GetProjectByNameAsync(string name);
-        Task<IEnumerable<Project>> GetProjectsAsync();
+        Task<ICollection<Project>> GetProjectsAsync();
         Task<ProjectDTO> CreateProjectAsync(ProjectDTO projectDTO);
+        Task<ICollection<Project>> GetProjectsByUserIdAync(int userId);
         void Update(Project project);
         Task<bool> SaveAll();
     }

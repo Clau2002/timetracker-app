@@ -1,0 +1,14 @@
+.header-projects-page{
+    height: 50px;
+    
+}
+
+table {
+    width: 100%;
+    position: relative;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}

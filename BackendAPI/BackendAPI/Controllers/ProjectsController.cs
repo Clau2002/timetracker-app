@@ -48,6 +48,12 @@ namespace BackendAPI.Controllers
             return await _projectRepository.CreateProjectAsync(projectDTO);
         }
 
+        [HttpGet("userId/{userId}")]
+        public async Task<IEnumerable<Project>> GetProjectsByUserId(int userId)
+        {
+            return await _projectRepository.GetProjectsByUserIdAync(userId);
+        }
+
         //[HttpGet]
         //public async Task<ActionResult> GetProjects()
         //{
@@ -66,22 +72,6 @@ namespace BackendAPI.Controllers
         //    return Ok(projectsQuery);
         //}
 
-        //[HttpGet("id/{id}")]
-        //public async Task<ActionResult> GetProjectsByUserId(int id)
-        //{
-        //    var projectsQuery = await (from user in _context.Users
-        //                               join projects in _context.Projects
-        //                               on user.Id equals projects.UserId
-        //                               where user.Id == id
-        //                               select new
-        //                               {
-        //                                   id = projects.Id,
-        //                                   name = projects.Name,
-        //                                   description = projects.Description,
-        //                                   projectStatus = projects.ProjectStatus
-        //                               }).ToListAsync();
-        //    return Ok(projectsQuery);
-        //}
 
         //[HttpGet("username/{username}")]
         //public async Task<ActionResult> GetProjectsByUserName(string username)

@@ -6,7 +6,8 @@ namespace BackendAPI.Interfaces
     {
         Task<Stage> GetStageByIdAsync(int id);
         Task<Stage> GetStageByNameAsync(string name);
-        Task<IEnumerable<Stage>> GetStagesAsync();
+        Task<ICollection<Stage>> GetStagesAsync();
+        Task<ICollection<Stage>> GetStagesByProjectIdAsync();
         void Update(Stage stage);
         Task<bool> SaveAll();
     }

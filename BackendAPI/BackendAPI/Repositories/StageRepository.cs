@@ -23,9 +23,14 @@ namespace BackendAPI.Data
             return await _context.Stages.SingleOrDefaultAsync(s => s.Name == name);
         }
 
-        public async Task<IEnumerable<Stage>> GetStagesAsync()
+        public async Task<ICollection<Stage>> GetStagesAsync()
         {
             return await _context.Stages.ToListAsync();
+        }
+
+        public Task<ICollection<Stage>> GetStagesByProjectIdAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<bool> SaveAll()

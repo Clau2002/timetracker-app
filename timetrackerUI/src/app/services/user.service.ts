@@ -7,13 +7,13 @@ import { User } from '../interfaces/user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  user: User = {};
+  user: any = {};
 
   constructor(private http: HttpClient) { }
 
   getUser() {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get(environment.userManagement.baseUrl + 'users/username/' + this.user.username, { headers });
+    // const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get(environment.userManagement.baseUrl + 'users/username/' + this.user.username);
   }
 
   // getProjects() {

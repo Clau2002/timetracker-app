@@ -1,27 +1,43 @@
-<mat-toolbar>
-    <mat-button-toggle value="left" aria-label="Text align left" (click)="opened = !opened">
-        <mat-icon>format_align_justify</mat-icon>
-    </mat-button-toggle>
-    <h2 style="margin-top: 17px; color: #449;">Timetracker</h2>
-    <div class="username">
-        {{ username }}
-    </div>
-</mat-toolbar>
+<div style="position:fixed; width: 100%;">
+    <mat-toolbar>
+        <mat-button-toggle value="left" aria-label="Text align left" (click)="opened = !opened">
+            <mat-icon>format_align_justify</mat-icon>
+        </mat-button-toggle>
+        <h2 style="margin-top: 17px; color: #449;">Timetracker</h2>
+        <div class="username">
+            {{ username }}
+        </div>
+    </mat-toolbar>
+
+    <mat-sidenav-container>
+        <mat-sidenav mode="side" [(opened)]="opened">
+            <mat-nav-list>
+                <a mat-list-item class="left-align-dashboard-item" routerLink="dashboard">
+                    <mat-icon>home</mat-icon> Dashboard
+                </a>
+                <a mat-list-item routerLink="projects" class="left-align-dashboard-item">
+                    <mat-icon>description</mat-icon> Projects
+                </a>
+                <a mat-list-item routerLink="tasks" class="left-align-dashboard-item">
+                    <mat-icon>task</mat-icon> Tasks
+                </a>
+                <a mat-list-item routerLink="reports" class="left-align-dashboard-item">
+                    <mat-icon>bar_chart</mat-icon> Reports
+                </a>
+                <a mat-list-item routerLink="settings" class="left-align-dashboard-item">
+                    <mat-icon>settings</mat-icon> Settings
+                </a>
+                <li mat-list-item routerLink="profile" class="left-align-dashboard-item">
+                    <mat-icon>account_circle</mat-icon> Profile
+                </li>
+            </mat-nav-list>
 
 
-<mat-sidenav-container>
-    <mat-sidenav mode="side" [(opened)]="opened">
-        <mat-nav-list>
-            <a mat-list-item routerLink="dashboard" class="left-align"><mat-icon>home</mat-icon> Dashboard</a>
-            <a mat-list-item routerLink="projects" class="left-align"><mat-icon>description</mat-icon> Projects</a>
-            <a mat-list-item routerLink="tasks" class="left-align"><mat-icon>task</mat-icon> Tasks</a>
-            <a mat-list-item routerLink="reports" class="left-align"><mat-icon>bar_chart</mat-icon> Reports</a>
-            <a mat-list-item routerLink="settings" class="left-align"><mat-icon>settings</mat-icon> Settings</a>
-            <a mat-list-item routerLink="profile" class="left-align"><mat-icon>account_circle</mat-icon> Profile</a>
-        </mat-nav-list>
-
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="scrollable-content">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
