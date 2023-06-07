@@ -1,6 +1,7 @@
 import { Time } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ProjectService } from 'src/app/services/project.service';
 
 export interface PeriodicElement {
   name: string;
@@ -9,45 +10,42 @@ export interface PeriodicElement {
   stage: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-];
-
-
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent {
-
+export class ProjectsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'time', 'stage', 'status'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<PeriodicElement>([]);
+
+  constructor(private projectService: ProjectService) {}
+
+  ngOnInit() {
+    this.loadProjects();
+  }
+
+  loadProjects() {
+    this.projectService.getUserProjects().subscribe(
+      (projects: any[]) => {
+        const elements: PeriodicElement[] = projects.map((project: any) => ({
+          name: project.name,
+          status: project.status,
+          time: project.time,
+          stage: project.stage
+        }));
+        this.dataSource.data = elements;
+      },
+      (error: any) => {
+        console.log('Error retrieving projects:', error);
+      }
+    );
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  projects: any[] = [
-    {
-      id: 1,
-      name: 'Project 1',
-      description: 'Description for Project 1',
-      projectStatus: 'In Progress'
-    },
-    {
-      id: 2,
-      name: 'Project 2',
-      description: 'Description for Project 2',
-      projectStatus: 'Completed'
-    },
-    {
-      id: 3,
-      name: 'Project 3',
-      description: 'Description for Project 3',
-      projectStatus: 'Pending'
-    }
-  ];
 
   createProject() {
     // Logic for creating a new project

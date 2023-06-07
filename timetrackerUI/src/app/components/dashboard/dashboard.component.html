@@ -6,10 +6,16 @@
         <button mat-fab color="primary" class="add-project-btn" (click)="openDialog()">
             <mat-icon>add</mat-icon>
         </button>
+        <div class="timer">
+            <h1 style="margin: 10px 15px 10px 10px;">{{ seconds }} seconds</h1>
+            <button (click)="startTimer()" [disabled]="isRunning">Start</button>
+            <button (click)="stopTimer()" [disabled]="!isRunning">Stop</button>
+            <button (click)="resetTimer()">Reset</button>
+        </div>
     </div>
     <div class="statistics-current-project">
         <div class="current-project">
-            
+
         </div>
         <div class="statistics">
 

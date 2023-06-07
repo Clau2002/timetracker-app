@@ -27,7 +27,7 @@ namespace BackendAPI.Data
                 UserId = projectDTO.UserId,
                 Name = projectDTO.Name,
                 Description = projectDTO.Description,
-                ProjectStatus = projectDTO.ProjectStatus,
+                Status = projectDTO.Status,
                 Stages = projectDTO.Stages
             };
 
@@ -39,12 +39,12 @@ namespace BackendAPI.Data
                 UserId = projectDTO.UserId,
                 Name = project.Name,
                 Description = project.Description,
-                ProjectStatus = project.ProjectStatus,
+                Status = project.Status,
                 Stages = project.Stages
             };
         }
 
-        public async Task<Project> GetProjectByIdAsync(int id)
+        public async Task<Project> GetProjectByIdAsync(Guid id)
         {
             var project = await _context.Projects.FindAsync(id);
             var stages = _context.Stages.Where(s => s.ProjectId == id).ToList();
@@ -64,7 +64,7 @@ namespace BackendAPI.Data
             return project;
         }
 
-        public async Task<ICollection<Project>> GetProjectsByUserIdAync(int userId)
+        public async Task<ICollection<Project>> GetProjectsByUserIdAync(Guid userId)
         {
             var projectsQuery = await (from user in _context.Users
                                        join project in _context.Projects
@@ -76,7 +76,7 @@ namespace BackendAPI.Data
                                            UserId = project.UserId,
                                            Name = project.Name,
                                            Description = project.Description,
-                                           ProjectStatus = project.ProjectStatus,
+                                           Status = project.Status,
                                            Stages = project.Stages
                                        }).ToListAsync();
 

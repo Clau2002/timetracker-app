@@ -29,7 +29,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TimeEntry>> GetTimeEntry(int id)
+        public async Task<ActionResult<TimeEntry>> GetTimeEntry(Guid id)
         {
             var timeEntry = await _context.TimeEntries.FindAsync(id);
 
@@ -42,7 +42,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTimeEntry(int id, TimeEntry timeEntry)
+        public async Task<IActionResult> PutTimeEntry(Guid id, TimeEntry timeEntry)
         {
             if (id != timeEntry.Id)
             {
@@ -94,7 +94,7 @@ namespace BackendAPI.Controllers
             return NoContent();
         }
 
-        private bool TimeEntryExists(int id)
+        private bool TimeEntryExists(Guid id)
         {
             return _context.TimeEntries.Any(e => e.Id == id);
         }

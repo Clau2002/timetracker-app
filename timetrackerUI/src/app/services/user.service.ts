@@ -8,12 +8,13 @@ import { User } from '../interfaces/user.interface';
 })
 export class UserService {
   user: any = {};
+  
 
   constructor(private http: HttpClient) { }
 
-  getUser() {
+  getUser(username: string) {
     // const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get(environment.userManagement.baseUrl + 'users/username/' + this.user.username);
+    return this.http.get(environment.userManagement.baseUrl + 'users/username/' + username);
   }
 
   // getProjects() {

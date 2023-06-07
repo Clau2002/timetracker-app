@@ -4,7 +4,7 @@ namespace BackendAPI.Interfaces
 {
     public interface IStageRepository
     {
-        Task<Stage> GetStageByIdAsync(int id);
+        Task<Stage> GetStageByIdAsync(Guid id);
         Task<Stage> GetStageByNameAsync(string name);
         Task<ICollection<Stage>> GetStagesAsync();
         Task<ICollection<Stage>> GetStagesByProjectIdAsync();

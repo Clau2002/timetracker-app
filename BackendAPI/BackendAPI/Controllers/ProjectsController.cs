@@ -29,7 +29,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public async Task<Project> GetProjectById(int id)
+        public async Task<Project> GetProjectById(Guid id)
         {
             return await _projectRepository.GetProjectByIdAsync(id);
         }
@@ -49,7 +49,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("userId/{userId}")]
-        public async Task<IEnumerable<Project>> GetProjectsByUserId(int userId)
+        public async Task<IEnumerable<Project>> GetProjectsByUserId(Guid userId)
         {
             return await _projectRepository.GetProjectsByUserIdAync(userId);
         }

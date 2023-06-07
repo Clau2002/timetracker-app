@@ -20,7 +20,28 @@ import { DialogService } from 'src/app/services/dialog.service';
 })
 
 export class DashboardComponent {
+  timer: any;
+  seconds: number = 0;
+  isRunning: boolean = false;
+
+  startTimer() {
+    this.timer = setInterval(() => {
+      this.seconds++;
+    }, 1000);
+    this.isRunning = true;
+  }
+
+  stopTimer() {
+    clearInterval(this.timer);
+    this.isRunning = false;
+  }
+
+  resetTimer() {
+    this.seconds = 0;
+    this.stopTimer();
+  }
   username?: string;
+  
   // projects: Project[] = [];
   newProjectName: string = "";
   showAddProjectForm: boolean = false;
@@ -38,8 +59,8 @@ export class DashboardComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddProjectComponent, {
-      width: '400px',
-      height: '700px'
+      width: '600px',
+      height: '500px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

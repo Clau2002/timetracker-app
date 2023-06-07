@@ -34,6 +34,10 @@ mat-sidenav {
   text-align: left;
 }
 
+.mdc-list-item__primary-text{
+  color: white !important;
+}
+
 .left-align-dashboard-item {
   /* text-align: left; */
   /* margin-left: 10px; */
@@ -41,9 +45,11 @@ mat-sidenav {
   font-size: x-large;
   text-align: left;
   margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .scrollable-content {
-  height: calc(100vh - 64px); /* Adjust the height based on your toolbar height */
+  /* height: calc(100vh - 64px); Adjust the height based on your toolbar height */
+  height: 100%;
   overflow-y: auto;
 }

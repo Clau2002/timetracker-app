@@ -4,6 +4,8 @@ using BackendAPI.Models;
 using BackendAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using BackendAPI.Interfaces;
+using AutoMapper;
+using BackendAPI.DTO;
 
 namespace BackendAPI.Controllers
 {
@@ -11,27 +13,31 @@ namespace BackendAPI.Controllers
     public class UsersController : BaseControllerApi
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<ICollection<UserDTO>>> GetUsers()
         {
-            return Ok(await _userRepository.GetUsersAsync());
+            var users = await _userRepository.GetUsersAsync();
+            var usersToReturn = _mapper.Map<ICollection<UserDTO>>(users);
+            return Ok(usersToReturn);
         }
 
         [HttpGet("username/{username}")]
-        public async Task<ActionResult<User>> GetUserByUsername(string username)
+        public async Task<ActionResult<UserDTO>> GetUserByUsername(string username)
         {
-            return await _userRepository.GetUserByUsernameAsync(username); 
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            return _mapper.Map<UserDTO>(user);
         }
 
 
         [HttpGet("id/{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        public async Task<ActionResult<User>> GetUserById(Guid id)
         {
             return await _userRepository.GetUserByIdAsync(id);
         }

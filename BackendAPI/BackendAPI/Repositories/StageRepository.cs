@@ -13,7 +13,7 @@ namespace BackendAPI.Data
             _context = dataContext;
         }
 
-        public async Task<Stage> GetStageByIdAsync(int id)
+        public async Task<Stage> GetStageByIdAsync(Guid id)
         {
             return await _context.Stages.FindAsync(id);
         }

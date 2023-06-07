@@ -7,12 +7,12 @@ namespace BackendAPI.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public int StageId { get; set; }
+        public Guid StageId { get; set; }
 
         [Required]
-        public DateTime StartTime { get; set; } = DateTime.Now;
+        public DateTime StartTime { get; set; }
 
         [Required]
         public DateTime EndTime { get; set; }

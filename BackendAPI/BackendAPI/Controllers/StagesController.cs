@@ -29,7 +29,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public async Task<Stage> GetStageById(int id)
+        public async Task<Stage> GetStageById(Guid id)
         {
             return await _stageRepository.GetStageByIdAsync(id);
         }

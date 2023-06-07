@@ -12,7 +12,7 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getUserProjects() {
-    return this.http.get(environment.userManagement.baseUrl + 'projects/userId/' + localStorage.getItem('userId'));
+    return this.http.get(environment.userManagement.baseUrl + 'projects/userId/1005');
   }
 
   createProject(project: Project) {
