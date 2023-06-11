@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace BackendAPI.Data.Migrations
+namespace BackendAPI.Migrations
 {
-    public partial class ModifiedEntities : Migration
+    public partial class SwitchFromGuidToInt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

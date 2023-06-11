@@ -14,7 +14,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { AddProjectComponent } from './components/add-project/add-project.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     MaterialModule,
     CommonModule,
     HttpClientModule,
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatMomentModule
     
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

@@ -6,11 +6,11 @@ namespace BackendAPI.Interfaces
 {
     public interface IProjectRepository
     {
-        Task<Project> GetProjectByIdAsync(Guid id);
+        Task<Project> GetProjectByIdAsync(int id);
         Task<Project> GetProjectByNameAsync(string name);
         Task<ICollection<Project>> GetProjectsAsync();
-        Task<ProjectDTO> CreateProjectAsync(ProjectDTO projectDTO);
-        Task<ICollection<Project>> GetProjectsByUserIdAync(Guid userId);
+        Task<Project> CreateProjectAsync(Project projectDTO);
+        Task<ICollection<Project>> GetProjectsByUserIdAync(int userId);
         void Update(Project project);
         Task<bool> SaveAll();
     }

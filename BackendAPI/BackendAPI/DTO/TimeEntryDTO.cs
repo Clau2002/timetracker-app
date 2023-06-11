@@ -2,7 +2,9 @@
 {
     public class TimeEntryDTO
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+
+        public int StageId { get; set; }
 
         public DateTime StartTime { get; set; }
 

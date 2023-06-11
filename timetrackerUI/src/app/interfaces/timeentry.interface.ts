@@ -1,6 +1,6 @@
 export interface TimeEntry {
-    id: number;
-    stageId: number;
-    startTime: Date;
-    endTime: Date;
+    id?: number;
+    stageId?: number;
+    startTime?: Date;
+    endTime?: Date;
 }

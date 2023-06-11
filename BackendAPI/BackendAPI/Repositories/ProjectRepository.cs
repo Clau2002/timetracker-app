@@ -17,7 +17,7 @@ namespace BackendAPI.Data
             _stageRepository = new StageRepository(dataContext);
         }
 
-        public async Task<ProjectDTO> CreateProjectAsync(ProjectDTO projectDTO)
+        public async Task<Project> CreateProjectAsync(Project projectDTO)
         {
             if (await ProjectExists(projectDTO.Name))
                 return null;
@@ -33,18 +33,18 @@ namespace BackendAPI.Data
 
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
-
-            return new ProjectDTO
-            {
-                UserId = projectDTO.UserId,
-                Name = project.Name,
-                Description = project.Description,
-                Status = project.Status,
-                Stages = project.Stages
-            };
+            return project;
+            //return new ProjectDTO
+            //{
+            //    UserId = projectDTO.UserId,
+            //    Name = project.Name,
+            //    Description = project.Description,
+            //    Status = project.Status,
+            //    Stages = project.Stages
+            //};
         }
 
-        public async Task<Project> GetProjectByIdAsync(Guid id)
+        public async Task<Project> GetProjectByIdAsync(int id)
         {
             var project = await _context.Projects.FindAsync(id);
             var stages = _context.Stages.Where(s => s.ProjectId == id).ToList();
@@ -64,7 +64,7 @@ namespace BackendAPI.Data
             return project;
         }
 
-        public async Task<ICollection<Project>> GetProjectsByUserIdAync(Guid userId)
+        public async Task<ICollection<Project>> GetProjectsByUserIdAync(int userId)
         {
             var projectsQuery = await (from user in _context.Users
                                        join project in _context.Projects

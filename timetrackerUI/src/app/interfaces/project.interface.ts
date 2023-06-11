@@ -5,6 +5,6 @@ export interface Project {
     userId?: number;
     name?: string;
     description?: string;
-    projectStatus?: number;
+    status?: string;
     stages?: Stage[];
 }

@@ -7,14 +7,20 @@ import { User } from '../interfaces/user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  user: any = {};
-  
+  user: User = {};
+
 
   constructor(private http: HttpClient) { }
 
   getUser(username: string) {
     // const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get(environment.userManagement.baseUrl + 'users/username/' + username);
+    // return this.http.get(environment.userManagement.baseUrl + 'users/username/' + username);
+    const endpoint = environment.userManagement.baseUrl + 'users/username/' + username;
+    return this.http.get<User>(endpoint);
+  }
+
+  getUserById(userId: number) {
+    return this.http.get<User>(environment.userManagement.baseUrl + 'users/id/' + userId);
   }
 
   // getProjects() {

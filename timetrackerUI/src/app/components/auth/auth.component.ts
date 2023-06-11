@@ -21,19 +21,29 @@ export class AuthComponent {
     private userService: UserService,
     private _snackBar: MatSnackBar) { }
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     if (form.valid) {
       console.log("ok");
       if (this.isLoginMode) {
         this.authService.login(form.value).subscribe({
-          next: (res: any) => {
+          next: async (res: any) => {
             form.reset();
             console.log(res);
             this.authService.storeToken(res.token);
-            this.userService.user.username = res.username;
+            this.userService.user = res;
+            try {
+              const user = await this.userService.getUser('danny').toPromise();
+              this.userService.user = user;
+              console.log('this is user from auth:'+user.username);
+              console.log('this is userService from auth:'+this.userService.user.username);
+              // ...
+            } catch (error) {
+              console.log(error);
+            }
+
             // const serilizedUser = JSON.stringify(this.userService.user.username);
-            localStorage.setItem('username', this.userService.user.username);
-            localStorage.setItem('userId', this.userService.user.id);
+            //localStorage.setItem('username', form.value.username);
+            // localStorage.setItem('userId', this.userService.user.id);
             // this.userService.getProjects = res.projects;
             this._snackBar.open('Login Successful', 'Dismiss', {
               duration: 3000,
@@ -61,6 +71,7 @@ export class AuthComponent {
             this.authService.storeToken(res.token);
             this.userService.user.id = res.id;
             this.userService.user.username = res.username;
+            localStorage.setItem("usernameLocalStorage", res.username);
             // this.userService.getProjects = res.projects;
             this._snackBar.open('Registration Successful', 'Dismiss', {
               duration: 3000,

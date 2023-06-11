@@ -7,9 +7,9 @@ namespace BackendAPI.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
-        public Guid StageId { get; set; }
+        public int StageId { get; set; }
 
         [Required]
         public DateTime StartTime { get; set; }

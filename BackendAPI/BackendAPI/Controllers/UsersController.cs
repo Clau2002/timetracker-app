@@ -14,10 +14,13 @@ namespace BackendAPI.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper, ITokenService tokenService)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpGet]
@@ -32,21 +35,26 @@ namespace BackendAPI.Controllers
         public async Task<ActionResult<UserDTO>> GetUserByUsername(string username)
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
-            return _mapper.Map<UserDTO>(user);
+
+            var userToReturn = _mapper.Map<UserDTO>(user);
+            userToReturn.Token = _tokenService.CreateToken(user);
+            return userToReturn;
         }
 
 
         [HttpGet("id/{id}")]
-        public async Task<ActionResult<User>> GetUserById(Guid id)
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
         {
-            return await _userRepository.GetUserByIdAsync(id);
+            var user = await _userRepository.GetUserByIdAsync(id);
+            var userToReturn = _mapper.Map<UserDTO>(user);
+            return userToReturn;
         }
 
-        [HttpPut]
-        public async Task UpdateUser(User user)
-        {
-            await _userRepository.UpdateUserAsync(user);
-        }
+        //[HttpPut]
+        //public async Task UpdateUser(User user)
+        //{
+        //    await _userRepository.UpdateUserAsync(user);
+        //}
 
         //[HttpPut("{id}")]
         //public async Task<IActionResult> PutUser(int id, User user)

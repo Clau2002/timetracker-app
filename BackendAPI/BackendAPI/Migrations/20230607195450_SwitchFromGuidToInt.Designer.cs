@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BackendAPI.Data.Migrations
+namespace BackendAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230222234415_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230607195450_SwitchFromGuidToInt")]
+    partial class SwitchFromGuidToInt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,7 @@ namespace BackendAPI.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -41,9 +42,10 @@ namespace BackendAPI.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PtojectStatus")
+                    b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -67,6 +69,7 @@ namespace BackendAPI.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -78,8 +81,9 @@ namespace BackendAPI.Data.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<string>("StageStatus")
+                    b.Property<string>("Status")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
@@ -125,10 +129,11 @@ namespace BackendAPI.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -142,35 +147,29 @@ namespace BackendAPI.Data.Migrations
 
             modelBuilder.Entity("BackendAPI.Models.Project", b =>
                 {
-                    b.HasOne("BackendAPI.Models.User", "User")
+                    b.HasOne("BackendAPI.Models.User", null)
                         .WithMany("Projects")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BackendAPI.Models.Stage", b =>
                 {
-                    b.HasOne("BackendAPI.Models.Project", "Project")
+                    b.HasOne("BackendAPI.Models.Project", null)
                         .WithMany("Stages")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("BackendAPI.Models.TimeEntry", b =>
                 {
-                    b.HasOne("BackendAPI.Models.Stage", "Stage")
+                    b.HasOne("BackendAPI.Models.Stage", null)
                         .WithMany("TimeEntries")
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Stage");
                 });
 
             modelBuilder.Entity("BackendAPI.Models.Project", b =>

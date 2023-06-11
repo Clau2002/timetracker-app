@@ -9,6 +9,7 @@ using BackendAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using BackendAPI.Interfaces;
 using BackendAPI.DTO;
+using AutoMapper;
 
 namespace BackendAPI.Controllers
 {
@@ -16,9 +17,11 @@ namespace BackendAPI.Controllers
     public class ProjectsController : BaseControllerApi
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IMapper _mapper;
 
-        public ProjectsController(IProjectRepository projectRepository)
+        public ProjectsController(IProjectRepository projectRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _projectRepository = projectRepository;
         }
 
@@ -29,7 +32,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public async Task<Project> GetProjectById(Guid id)
+        public async Task<Project> GetProjectById(int id)
         {
             return await _projectRepository.GetProjectByIdAsync(id);
         }
@@ -41,7 +44,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("{createProject}")]
-        public async Task<ProjectDTO> CreateProject(ProjectDTO projectDTO)
+        public async Task<Project> CreateProject(Project projectDTO)
         {
             //if (_projectRepository.CreateProjectAsync(projectDTO) == null)
             //    return BadRequest("Project already exists");
@@ -49,7 +52,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("userId/{userId}")]
-        public async Task<IEnumerable<Project>> GetProjectsByUserId(Guid userId)
+        public async Task<IEnumerable<Project>> GetProjectsByUserId(int userId)
         {
             return await _projectRepository.GetProjectsByUserIdAync(userId);
         }

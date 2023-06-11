@@ -59,8 +59,8 @@ export class DashboardComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddProjectComponent, {
-      width: '600px',
-      height: '500px'
+      width: '500px',
+      height: '530px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

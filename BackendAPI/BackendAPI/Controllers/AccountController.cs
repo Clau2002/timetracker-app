@@ -1,4 +1,5 @@
-﻿using BackendAPI.Data;
+﻿using AutoMapper;
+using BackendAPI.Data;
 using BackendAPI.DTO;
 using BackendAPI.Interfaces;
 using BackendAPI.Models;
@@ -13,11 +14,13 @@ namespace BackendAPI.Controllers
     {
         private readonly ITokenService _tokenService; 
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
         {
             _tokenService = tokenService;
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -29,18 +32,27 @@ namespace BackendAPI.Controllers
             var user = new User
             {
                 UserName = registerDTO.Username.ToLower(),
+                FirstName = registerDTO.FirstName,
+                LastName = registerDTO.LastName,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password.ToLower())),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                Email = registerDTO.Email.ToLower()
             };
-
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return new UserDTO
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
-            };
+            var newUserDTO = _mapper.Map<UserDTO>(user);
+            newUserDTO.Token = _tokenService.CreateToken(user);
+            return newUserDTO;
+
+            //return new UserDTO
+            //{
+            //    Id = user.Id,
+            //    Username = user.UserName,
+            //    Email = user.Email,
+            //    Projects = user.Projects,
+            //    Token = _tokenService.CreateToken(user)
+            //};
         }
 
         [HttpPost("login")]
@@ -59,11 +71,20 @@ namespace BackendAPI.Controllers
                     return Unauthorized("invalid password");
             }
 
-            return new UserDTO
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
-            };
+            var newUserDTO = _mapper.Map<UserDTO>(user);
+            newUserDTO.Token = _tokenService.CreateToken(user);
+            return newUserDTO;
+
+            //return new UserDTO
+            //{
+            //    Id = user.Id,
+            //    UserName = user.UserName,
+            //    FirstName = user.FirstName,
+            //    LastName = user.LastName,
+            //    Email = user.Email,
+            //    Projects = (ICollection<ProjectDTO>)user.Projects,
+            //    Token = _tokenService.CreateToken(user)
+            //};
         }
 
         private async Task<bool> UserExists(string username)
