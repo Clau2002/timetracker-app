@@ -12,6 +12,12 @@ import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
+
+interface StageNames {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
@@ -27,6 +33,12 @@ export class AddProjectComponent implements OnInit {
   newProjectName: string = "";
   showAddProjectForm: boolean = false;
   userDataSubscription : Subscription;
+  selectedValue: string;
+  stageNames: StageNames[] = [
+    {value: '1', viewValue: 'To Do'},
+    {value: '2', viewValue: 'Implementation'},
+    {value: '2', viewValue: 'Done'}
+  ];
 
   constructor(public dialogRef: MatDialogRef<AddProjectComponent>,
     private projectService: ProjectService,

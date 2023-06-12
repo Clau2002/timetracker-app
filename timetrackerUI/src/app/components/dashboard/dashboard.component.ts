@@ -59,7 +59,7 @@ export class DashboardComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddProjectComponent, {
-      width: '500px',
+      width: '530px',
       height: '530px'
     });
 
