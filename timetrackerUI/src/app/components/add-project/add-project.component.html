@@ -25,19 +25,21 @@
       </mat-form-field> -->
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Name</mat-label>
-        <mat-select [(ngModel)]="selectedValue" name="stageName">
+        <mat-select [(ngModel)]="newStage.name" name="stageName">
           <mat-option *ngFor="let stageName of stageNames" [value]="stageName.value">
             {{stageName.viewValue}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Deadline</mat-label>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [(ngModel)]="newStage.deadline">
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="stageDeadline">
         <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker [showSeconds]="false" [showSpinners]="true">
         </ngx-mat-datetime-picker>
       </mat-form-field>
+
     </div>
     <div class="form-row">
       <mat-form-field class="form-field" appearance="outline">

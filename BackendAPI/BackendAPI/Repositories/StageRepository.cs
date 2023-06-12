@@ -13,6 +13,25 @@ namespace BackendAPI.Data
             _context = dataContext;
         }
 
+        public async Task<Stage> CreateStageAsync(Stage stage)
+        {
+            if (await StageExists(stage.Name))
+                return null;
+
+            var _stage = new Stage
+            {
+                ProjectId = stage.ProjectId,
+                Name = stage.Name,
+                Description = stage.Description,
+                Status = stage.Status,
+                Deadline = stage.Deadline
+            };
+
+            _context.Stages.Add(_stage);
+            await _context.SaveChangesAsync();
+            return _stage;
+        }
+
         public async Task<Stage> GetStageByIdAsync(int id)
         {
             return await _context.Stages.FindAsync(id);
@@ -41,6 +60,11 @@ namespace BackendAPI.Data
         public void Update(Stage stage)
         {
             _context.Entry(stage).State = EntityState.Modified;
+        }
+
+        private async Task<bool> StageExists(string name)
+        {
+            return await _context.Stages.AnyAsync(p => p.Name == name);
         }
     }
 }

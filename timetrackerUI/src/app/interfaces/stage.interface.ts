@@ -1,3 +1,4 @@
+import { Moment } from "moment";
 import { TimeEntry } from "./timeentry.interface";
 
 export interface Stage {
@@ -6,6 +7,6 @@ export interface Stage {
     name?: string;
     description?: string;
     status?: string;
-    deadline?: Date;
+    deadline?: Moment;
     timeentries?:TimeEntry[];
 }
