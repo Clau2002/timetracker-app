@@ -1,15 +1,15 @@
 import { MatDatetimePickerInputEvent, NgxMatDatetimePicker } from '@angular-material-components/datetime-picker';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { Project } from 'src/app/interfaces/project.interface';
 import { Stage } from 'src/app/interfaces/stage.interface';
-
+import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
@@ -21,6 +21,12 @@ interface StageNames {
   viewValue: string;
 }
 
+enum StageName {
+  ToDo = 'To Do',
+  Implementation = 'Implementation',
+  Done = 'Done'
+}
+
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
@@ -30,7 +36,8 @@ export class AddProjectComponent implements OnInit {
   @ViewChild('picker') picker!: NgxMatDatetimePicker<any>;
 
   _userId?: number;
-  newProject: Project = {};
+  _projectId?: number;
+  searchedProject: Project = {};
   newStage: Stage = {};
   stages: Stage[] = [];
   newProjectName: string = "";
@@ -38,12 +45,19 @@ export class AddProjectComponent implements OnInit {
   userDataSubscription: Subscription;
   selectedValue: string;
   stageNames: StageNames[] = [
-    { value: '1', viewValue: 'To Do' },
-    { value: '2', viewValue: 'Implementation' },
-    { value: '3', viewValue: 'Done' }
+    { value: StageName.ToDo, viewValue: 'To Do' },
+    { value: StageName.Implementation, viewValue: 'Implementation' },
+    { value: StageName.Done, viewValue: 'Done' }
   ];
   stageDeadline = new FormControl();
-  private saveAsUTCValue: boolean = false;
+
+  projectForm = new FormGroup({
+    projectName: new FormControl(''),
+    projectDescription: new FormControl(''),
+    stageName: new FormControl(''),
+    stageDeadline: new FormControl(''),
+    stageDescription: new FormControl()
+  });
 
   constructor(public dialogRef: MatDialogRef<AddProjectComponent>,
     private projectService: ProjectService,
@@ -64,56 +78,44 @@ export class AddProjectComponent implements OnInit {
     );
   }
 
-  addProject(newProject: Project) {
+  addProject() {
     if (this.authService.isLoggedIn()) {
-      // Set the user ID and status for the new project
-      newProject.userId = this._userId;
-      newProject.status = "Test status";
+      this.dialogRef.close();
+      const formData = this.projectForm.value;
+      const selectedDeadline = formData.stageDeadline;
+      const localDedline = moment(selectedDeadline).local().format();
+      const stageData: Stage = {
+        name: formData.stageName,
+        deadline: localDedline,
+        description: formData.stageDescription,
+        status: 'testing',
+      }
 
-      // Create the project
-      this.projectService.createProject(newProject).subscribe(
-        (createdProject: Project) => {
-          // Create the stage for the new project
-          const newStage: Stage = {
-            projectId: createdProject.id,
-            name: "Stage 3343",
-            description: "stage works",
-            status: "testing",
-            deadline: moment(this.stageDeadline.value).utc(),
-          };
+      var stagesData: Stage[] = [stageData];
 
-          this.projectService.createStage(newStage).subscribe(
-            (createdStage: Stage) => {
-              // Stage created successfully
-              console.log("Created stage: ", createdStage);
-
-              // Close the dialog and show a success message
-              this.dialogRef.close(createdProject);
-              this._snackBar.open("Project added", "Close", {
-                duration: 2000,
-                horizontalPosition: "center",
-                verticalPosition: "top",
-              });
-            },
-            (error: any) => {
-              // Error occurred while creating the stage
-              console.error("Failed to create stage: ", error);
-            }
-          );
-        },
-        (error: any) => {
-          // Error occurred while creating the project
-          console.error("Failed to create project: ", error);
-        }
-      );
+      const projectData: Project = {
+        userId: this._userId,
+        name: formData.projectName,
+        description: formData.projectDescription,
+        status: 'Test',
+        stages: stagesData
+      };
+      this.projectService.createProject(projectData).subscribe();
+      this._snackBar.open('Project added', 'Close', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     }
   }
 
-
-
-  // addProject(newProject: Project) {
-  //   console.log(moment(this.stageDeadline.value).utc().format('YYYY-MM-DD HH:mm:ssZ'))
-  // }
+  getProjectByName(name: string) {
+    return this.projectService.getProject(name).subscribe(
+      (res: Project) => {
+        this.searchedProject = res;
+      }
+    );
+  }
 
   onNoClick() {
     this.dialogRef.close();

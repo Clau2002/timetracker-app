@@ -21,7 +21,11 @@ export class ProjectService {
     return this.http.post(environment.userManagement.baseUrl + 'projects/createProject', project);
   }
 
-  createStage(stage: Stage){
+  getProject(projectName: string) {
+    return this.http.get<Project>(environment.userManagement.baseUrl + 'projects/name/' + projectName);
+  }
+
+  createStage(stage: Stage) {
     return this.http.post(environment.userManagement.baseUrl + 'stages/createStage', stage);
   }
 

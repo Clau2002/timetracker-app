@@ -8,6 +8,6 @@ namespace BackendAPI.DTO
         public string Name { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
-        public ICollection<StageDTO> Stages { get; set; }
+        public ICollection<StageDTO> Stages { get; set; } = new List<StageDTO>();
     }
 }

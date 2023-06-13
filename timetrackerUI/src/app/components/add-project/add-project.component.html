@@ -1,18 +1,18 @@
 <h1 mat-dialog-title>Add project</h1>
-<form (ngSubmit)="addProject(newProject)" #projectForm="ngForm" class="example-form">
+<form (ngSubmit)="addProject()" class="example-form" [formGroup]="projectForm">
   <div mat-dialog-content class="dialog-content">
     <div class="form-row">
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Project Name</mat-label>
-        <input matInput [(ngModel)]="newProject.name" name="name" placeholder="Enter project name">
+        <input matInput name="name" placeholder="Enter project name" formControlName="projectName">
       </mat-form-field>
     </div>
 
     <div class="form-row">
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="newProject.description" name="description"
-          placeholder="Enter description"></textarea>
+        <textarea matInput name="description" placeholder="Enter description"
+          formControlName="projectDescription"></textarea>
       </mat-form-field>
     </div>
 
@@ -25,16 +25,16 @@
       </mat-form-field> -->
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Name</mat-label>
-        <mat-select [(ngModel)]="newStage.name" name="stageName">
+        <mat-select name="stageName" formControlName="stageName">
           <mat-option *ngFor="let stageName of stageNames" [value]="stageName.value">
-            {{stageName.viewValue}}
+            {{ stageName.viewValue }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Deadline</mat-label>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="stageDeadline">
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="stageDeadline">
         <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker [showSeconds]="false" [showSpinners]="true">
         </ngx-mat-datetime-picker>
@@ -44,14 +44,15 @@
     <div class="form-row">
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Enter description" [(ngModel)]="newStage.description"></textarea>
+        <textarea matInput placeholder="Enter description" [(ngModel)]="newStage.description"
+          formControlName="stageDescription"></textarea>
       </mat-form-field>
     </div>
 
   </div>
 
   <div mat-dialog-actions class="dialog-actions">
-    <button mat-raised-button [mat-dialog-close]="newProject" type="submit" cdkFocusInitial color="primary"
+    <button mat-raised-button [mat-dialog-close]="" type="submit" cdkFocusInitial color="primary"
       [disabled]="!projectForm.valid">Add Project</button>
     <button mat-button (click)="onNoClick()">No Thanks</button>
   </div>

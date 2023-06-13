@@ -14,6 +14,6 @@
 
         public DateTime Deadline { get; set; }
 
-        public ICollection<TimeEntryDTO> TimeEntries { get; set; }
+        public ICollection<TimeEntryDTO> TimeEntries { get; set; } = new List<TimeEntryDTO>();
     }
 }
