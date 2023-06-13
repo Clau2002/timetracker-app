@@ -20,9 +20,9 @@
 
 .timer {
     display: flex;
-    align-items:center;
+    align-items: center;
     align-self: center;
-    
+
     /* display: flex;
     justify-content: center;
     align-items: center;
@@ -133,4 +133,62 @@ mat-form-field {
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
+}
+
+
+.container {
+    text-align: center;
+    font-family: Lato;
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+.timer-counter-label {
+    align-items: center;
+    font-size: 27px;
+}
+
+.timer-start-text {
+    font-size: 20px;
+}
+
+.timer-button {
+    outline: none;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    background: #007bff;
+    color: #fff;
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px 10px;
+    min-width: 100px;
+}
+
+.timer-button:hover {
+    background: #0069d9;
+    border: 1px solid #0062cc;
+}
+
+.disabled {
+    cursor: not-allowed;
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.disabled:hover {
+    cursor: not-allowed;
+    background-color: #5a6268;
+    border: 1px solid #545b62;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
 }
