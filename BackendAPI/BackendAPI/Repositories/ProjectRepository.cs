@@ -9,12 +9,12 @@ namespace BackendAPI.Data
     public class ProjectRepository : IProjectRepository
     {
         private readonly DataContext _context;
-        private StageRepository _stageRepository;
+        private readonly IStageRepository _stageRepository;
 
-        public ProjectRepository(DataContext dataContext)
+        public ProjectRepository(DataContext dataContext, IStageRepository stageRepository)
         {
             _context = dataContext;
-            _stageRepository = new StageRepository(dataContext);
+            _stageRepository = stageRepository;
         }
 
         public async Task<Project> CreateProjectAsync(Project projectDTO)
@@ -47,7 +47,8 @@ namespace BackendAPI.Data
         public async Task<Project> GetProjectByIdAsync(int id)
         {
             var project = await _context.Projects.FindAsync(id);
-            var stages = _context.Stages.Where(s => s.ProjectId == id).ToList();
+            //var stages = _context.Stages.Where(s => s.ProjectId == id).ToList();
+            var stages = await _stageRepository.GetStagesByProjectIdAsync(id);
             project.Stages = stages;
             return project;
         }
@@ -55,9 +56,10 @@ namespace BackendAPI.Data
         public async Task<Project> GetProjectByNameAsync(string name)
         {
             var project = await _context.Projects.SingleOrDefaultAsync(p => p.Name == name);
-            if(project != null)
+            if (project != null)
             {
-                var stages = await _context.Stages.Where(s => s.ProjectId == project.Id).ToListAsync();
+                var stages = await _stageRepository.GetStagesByProjectIdAsync(project.Id);
+                //var stages = await _context.Stages.Where(s => s.ProjectId == project.Id).ToListAsync();
                 project.Stages = stages;
             }
 
@@ -80,6 +82,13 @@ namespace BackendAPI.Data
                                            Stages = project.Stages
                                        }).ToListAsync();
 
+            ICollection<Stage> stages = null;
+            foreach (var project in projectsQuery)
+            {
+                stages = await _stageRepository.GetStagesByProjectIdAsync(project.Id);
+                project.Stages = stages;
+            }
+
             return projectsQuery;
         }
 
@@ -95,14 +104,30 @@ namespace BackendAPI.Data
             return projectsQuery;
         }
 
-        public async Task<bool> SaveAll()
+        public async Task UpdateProjectAsync(Project project)
         {
-            return await _context.SaveChangesAsync() > 0;
+            _context.Projects.Update(project);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Project project)
+        public async Task<TimeSpan> GetTotalTimeSpentAsync(int projectId)
         {
-            _context.Entry(project).State = EntityState.Modified;
+            var project = await _context.Projects
+                .Include(p => p.Stages)
+                    .ThenInclude(s => s.TimeEntries)
+                .FirstOrDefaultAsync(p => p.Id == projectId);
+
+            TimeSpan totalTime = TimeSpan.Zero;
+
+            foreach (var stage in project.Stages)
+            {
+                foreach (var timeEntry in stage.TimeEntries)
+                {
+                    totalTime += timeEntry.EndTime - timeEntry.StartTime;
+                }
+            }
+
+            return totalTime;
         }
 
         private async Task<bool> ProjectExists(string name)

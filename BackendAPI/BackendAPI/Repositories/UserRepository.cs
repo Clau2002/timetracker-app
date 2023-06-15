@@ -1,4 +1,5 @@
-﻿using BackendAPI.Interfaces;
+﻿using AutoMapper;
+using BackendAPI.Interfaces;
 using BackendAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,11 +8,12 @@ namespace BackendAPI.Data
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
-        private ProjectRepository projectRepository;
-        public UserRepository(DataContext context)
+        private readonly IProjectRepository _projectRepository;
+
+        public UserRepository(DataContext context, IProjectRepository projectRepository)
         {
             _context = context;
-            projectRepository = new ProjectRepository(context);
+            _projectRepository = projectRepository;
         }
 
         public async Task<User> GetUserByIdAsync(int id)
@@ -19,7 +21,7 @@ namespace BackendAPI.Data
             var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                var projects = await projectRepository.GetProjectsByUserIdAync(id);
+                var projects = await _projectRepository.GetProjectsByUserIdAync(id);
                 user.Projects = projects;
             }
             return user;
@@ -30,7 +32,7 @@ namespace BackendAPI.Data
             var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
             if (user != null)
             {
-                var projects = await projectRepository.GetProjectsByUserIdAync(user.Id);
+                var projects = await _projectRepository.GetProjectsByUserIdAync(user.Id);
                 user.Projects = projects;
             }
             return user;
@@ -38,12 +40,11 @@ namespace BackendAPI.Data
 
         public async Task<ICollection<User>> GetUsersAsync()
         {
-            var users = await _context.Users.ToListAsync();
-
-            foreach (var user in users)
-            {
-                await GetUserByIdAsync(user.Id);
-            }
+            var users = await _context.Users
+                .Include(u => u.Projects)
+                    .ThenInclude(p => p.Stages)
+                        .ThenInclude(s => s.TimeEntries)
+                .ToListAsync();
 
             return users;
         }

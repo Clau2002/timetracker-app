@@ -45,5 +45,17 @@ namespace BackendAPI.Controllers
         {
             return await _stageRepository.CreateStageAsync(stage);
         }
+
+        [HttpPut("update")]
+        public async Task UpdateStage(Stage stage)
+        {
+            await _stageRepository.UpdateStageAsync(stage);
+        }
+
+        [HttpGet("getStageTime/{id}")]
+        public async Task<TimeSpan> GetStageTotalTime(int id)
+        {
+            return await _stageRepository.GetStageTotalTimeSpentAsync(id);
+        }
     }
 }

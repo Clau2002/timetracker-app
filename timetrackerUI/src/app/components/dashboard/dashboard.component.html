@@ -6,33 +6,10 @@
         <button mat-fab color="primary" class="add-project-btn" (click)="openDialog()">
             <mat-icon>add</mat-icon>
         </button>
-        <div class="container">
-            <section class="timer-counter-label">
-                <div *ngIf="counter" [ngClass]="{blink: !running}">
-                    <span>{{hours}}:</span><span>{{minutes}}:</span><span>{{seconds}}:</span>
-                    <span>{{milliseconds}}</span>
-                </div>
-                <div *ngIf="!counter">
-                    <!-- <span class="blink timer-start-text">Press Start</span> -->
-                    <!-- <br> -->
-                    <span>{{hours}}:</span><span>{{minutes}}:</span><span>{{seconds}}:</span>
-                    <span>{{milliseconds}}</span>
-                </div>
-            </section>
-            <div class="timer-button-container">
-                <button class="timer-button" (click)="startTimer()">
-                    {{ startText }}
-                </button>
-                <button class="timer-button" (click)="clearTimer()">Clear</button>
-            </div>
-        </div>
+        <app-stopwatch class="container"></app-stopwatch>
     </div>
     <div class="statistics-current-project">
-        <div class="current-project">
-
-        </div>
-        <div class="statistics">
-
-        </div>
+        <div class="current-project"></div>
+        <div class="statistics"></div>
     </div>
 </div>

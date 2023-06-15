@@ -9,7 +9,9 @@ namespace BackendAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>();
             CreateMap<Project, ProjectDTO>();
+            CreateMap<ProjectDTO, Project>();
             CreateMap<Stage, StageDTO>();
             CreateMap<TimeEntry, TimeEntryDTO>();
         }

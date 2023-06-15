@@ -16,6 +16,7 @@ import { AddProjectComponent } from './components/add-project/add-project.compon
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
     DashboardComponent,
     ProjectsComponent,
     ReportsComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    StopwatchComponent
   ],
   imports: [
     BrowserModule,

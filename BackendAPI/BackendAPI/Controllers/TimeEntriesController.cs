@@ -7,96 +7,49 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendAPI.Models;
 using BackendAPI.Data;
-
+using BackendAPI.Repositories;
+using BackendAPI.Interfaces;
 
 namespace BackendAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class TimeEntriesController : BaseControllerApi
     {
-        private readonly DataContext _context;
+        //private readonly DataContext _context;
+        private readonly ITimeEntryRepository _timeEntryRepository;
 
-        public TimeEntriesController(DataContext context)
+        public TimeEntriesController(ITimeEntryRepository timeEntryRepository)
         {
-            _context = context;
+            _timeEntryRepository = timeEntryRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TimeEntry>>> GetTimeEntries()
+        public async Task<ICollection<TimeEntry>> GetAllTimeEntries()
         {
-            return await _context.TimeEntries.ToListAsync();
+            return await _timeEntryRepository.GetAllTimeEntriesAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TimeEntry>> GetTimeEntry(int id)
+        public async Task<TimeEntry> GetTimeEntryById(int id)
         {
-            var timeEntry = await _context.TimeEntries.FindAsync(id);
-
-            if (timeEntry == null)
-            {
-                return NotFound();
-            }
-
-            return timeEntry;
+            return await _timeEntryRepository.GetTimeEntryByIdAsync(id);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTimeEntry(int id, TimeEntry timeEntry)
+        [HttpGet("stageId/{stageId}")]
+        public async Task<ICollection<TimeEntry>> GetTimeEntriesByStageId(int stageId)
         {
-            if (id != timeEntry.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(timeEntry).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TimeEntryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return await _timeEntryRepository.GetAllTimeEntriesByStageIdAsync(stageId);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<TimeEntry>> PostTimeEntry(TimeEntry timeEntry)
+        [HttpPut("update")]
+        public async Task UpdateTimeEntry(TimeEntry timeEntry)
         {
-            _context.TimeEntries.Add(timeEntry);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTimeEntry", new { id = timeEntry.Id }, timeEntry);
+            await _timeEntryRepository.UpdateTimeEntryAsync(timeEntry);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTimeEntry(int id)
+        [HttpPost("create")]
+        public async Task<TimeEntry> CreateTimeEntry(TimeEntry timeEntry)
         {
-            var timeEntry = await _context.TimeEntries.FindAsync(id);
-            if (timeEntry == null)
-            {
-                return NotFound();
-            }
-
-            _context.TimeEntries.Remove(timeEntry);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool TimeEntryExists(int id)
-        {
-            return _context.TimeEntries.Any(e => e.Id == id);
+            return await _timeEntryRepository.CreateTimeEntryAsync(timeEntry);
         }
     }
 }
