@@ -12,7 +12,7 @@ namespace BackendAPI.Controllers
 {
     public class AccountController : BaseControllerApi
     {
-        private readonly ITokenService _tokenService; 
+        private readonly ITokenService _tokenService;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
@@ -26,7 +26,8 @@ namespace BackendAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
-            if (await UserExists(registerDTO.Username)) return BadRequest("Username not available, choose another one");
+            if (await UserExists(registerDTO.Username))
+                return BadRequest("Username not available, choose another one");
 
             using var hmac = new HMACSHA512();
             var user = new User
@@ -44,15 +45,6 @@ namespace BackendAPI.Controllers
             var newUserDTO = _mapper.Map<UserDTO>(user);
             newUserDTO.Token = _tokenService.CreateToken(user);
             return newUserDTO;
-
-            //return new UserDTO
-            //{
-            //    Id = user.Id,
-            //    Username = user.UserName,
-            //    Email = user.Email,
-            //    Projects = user.Projects,
-            //    Token = _tokenService.CreateToken(user)
-            //};
         }
 
         [HttpPost("login")]
@@ -74,17 +66,6 @@ namespace BackendAPI.Controllers
             var newUserDTO = _mapper.Map<UserDTO>(user);
             newUserDTO.Token = _tokenService.CreateToken(user);
             return newUserDTO;
-
-            //return new UserDTO
-            //{
-            //    Id = user.Id,
-            //    UserName = user.UserName,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    Email = user.Email,
-            //    Projects = (ICollection<ProjectDTO>)user.Projects,
-            //    Token = _tokenService.CreateToken(user)
-            //};
         }
 
         private async Task<bool> UserExists(string username)

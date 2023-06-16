@@ -41,7 +41,6 @@ import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
     NgxMatDatetimePickerModule,
     NgxMatMomentModule,
     ReactiveFormsModule
-    
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

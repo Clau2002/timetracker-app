@@ -14,6 +14,11 @@ namespace BackendAPI.Repositories
             _context = context;
         }
 
+        public async Task<ICollection<TimeEntry>> GetAllTimeEntriesAsync()
+        {
+            return await _context.TimeEntries.ToListAsync();
+        }
+
         public async Task<TimeEntry> CreateTimeEntryAsync(TimeEntry timeEntry)
         {
             if (await TimeEntryExists(timeEntry))
@@ -26,10 +31,6 @@ namespace BackendAPI.Repositories
             return timeEntry;
         }
 
-        public async Task<ICollection<TimeEntry>> GetAllTimeEntriesAsync()
-        {
-            return await _context.TimeEntries.ToListAsync();
-        }
 
         public async Task<ICollection<TimeEntry>> GetAllTimeEntriesByStageIdAsync(int stageId)
         {

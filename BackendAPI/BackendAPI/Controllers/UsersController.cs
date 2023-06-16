@@ -51,9 +51,20 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPut("update")]
-        public async Task UpdateUser(User user)
+        public async Task<ActionResult> UpdateUser(UserDTO updatedUserDTO)
         {
-            await _userRepository.UpdateUserAsync(user);
+            var existingUser = await _userRepository.GetUserByIdAsync(updatedUserDTO.Id);
+
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(updatedUserDTO, existingUser);
+
+            await _userRepository.UpdateUserAsync(existingUser);
+
+            return NoContent();
         }
     }
 }

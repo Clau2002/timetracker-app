@@ -8,7 +8,7 @@ import { User } from '../interfaces/user.interface';
 })
 export class AuthService {
   constructor(private http: HttpClient) { }
-  
+
   login(user: User) {
     return this.http.post(environment.userManagement.baseUrl + 'account/login', user);
   }

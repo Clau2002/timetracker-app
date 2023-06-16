@@ -4,33 +4,27 @@
             <mat-label>First Name</mat-label>
             <input matInput placeholder="Enter your firstname" type="name" name="firstname" ngModel [required]="true">
         </mat-form-field>
-
         <mat-form-field appearance="fill" class="example-full-width" *ngIf="!isLoginMode">
             <mat-label>Last Name</mat-label>
             <input matInput placeholder="Enter your lastname" type="name" name="lastname" ngModel [required]="true">
         </mat-form-field>
-
         <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Username</mat-label>
             <input matInput placeholder="Enter your username" type="username" name="username" ngModel [required]="true"
                 username>
         </mat-form-field>
-
         <mat-form-field appearance="fill" class="example-full-width" *ngIf="!isLoginMode">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Enter your email" type="email" name="email" ngModel [required]="true">
         </mat-form-field>
-
         <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Password</mat-label>
             <input matInput placeholder="Enter your password" type="password" name="password" ngModel [required]="true">
         </mat-form-field>
-
         <div>
             <button mat-raised-button color="primary" type="submit" [disabled]="!authForm.valid">{{ isLoginMode ?
                 'Login':'Sign Up'}}</button>
         </div>
-
         <div>
             <span>
                 {{

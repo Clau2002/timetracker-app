@@ -12,9 +12,10 @@ using BackendAPI.Interfaces;
 
 namespace BackendAPI.Controllers
 {
-    public class TimeEntriesController : BaseControllerApi
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TimeEntriesController : ControllerBase
     {
-        //private readonly DataContext _context;
         private readonly ITimeEntryRepository _timeEntryRepository;
 
         public TimeEntriesController(ITimeEntryRepository timeEntryRepository)
