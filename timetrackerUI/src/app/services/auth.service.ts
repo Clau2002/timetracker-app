@@ -17,8 +17,9 @@ export class AuthService {
     return this.http.post(environment.userManagement.baseUrl + 'account/register', user);
   }
 
-  storeToken(tokenVal: string) {
+  storeToken(tokenVal: string, userId: number) {
     localStorage.setItem('token', tokenVal);
+    localStorage.setItem('userId', userId.toString());
   }
 
   getToken() {

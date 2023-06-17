@@ -29,10 +29,10 @@ export class AuthComponent {
           next: async (res: any) => {
             form.reset();
             console.log(res);
-            this.authService.storeToken(res.token);
+            this.authService.storeToken(res.token, res.id);
             this.userService.user = res;
             try {
-              const user = await this.userService.getUser('danny').toPromise();
+              const user = await this.userService.getUser('clau').toPromise();
               this.userService.user = user;
               console.log('this is user from auth:'+user.username);
               console.log('this is userService from auth:'+this.userService.user.username);
@@ -68,7 +68,7 @@ export class AuthComponent {
           next: (res: any) => {
             form.reset();
             console.log(res);
-            this.authService.storeToken(res.token);
+            this.authService.storeToken(res.token, res.id);
             this.userService.user.id = res.id;
             this.userService.user.username = res.username;
             localStorage.setItem("usernameLocalStorage", res.username);
