@@ -1,54 +1,34 @@
 import { Time } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, take, tap } from 'rxjs';
+import { Project } from 'src/app/interfaces/project.interface';
+import { ProjectMockService } from 'src/app/services/project-mock.service';
 import { ProjectService } from 'src/app/services/project.service';
-
-export interface PeriodicElement {
-  name: string;
-  status: string;
-  time: Time;
-  stage: string;
-}
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'time', 'stage', 'status'];
-  dataSource = new MatTableDataSource<PeriodicElement>([]);
+  projectObs: Subscription = new Subscription();
+  projectList: Project[] = [];
+  filteredProjects: Project[] = [];
 
-  constructor(private projectService: ProjectService) {}
-
-  ngOnInit() {
-    this.loadProjects();
+  constructor(
+    private projectService: ProjectService,
+    //private projectServiceMock: ProjectMockService
+  ) {
+    //this.projectList = this.projectServiceMock.getAllProjects();
   }
 
-  loadProjects() {
-    this.projectService.getUserProjects().subscribe(
-      (projects: any[]) => {
-        const elements: PeriodicElement[] = projects.map((project: any) => ({
-          name: project.name,
-          status: project.status,
-          time: project.time,
-          stage: project.stage
-        }));
-        this.dataSource.data = elements;
-      },
-      (error: any) => {
-        console.log('Error retrieving projects:', error);
-      }
-    );
+  ngOnInit(): void {
+    this.getProjects();
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  createProject() {
-    // Logic for creating a new project
-    console.log('Create project button clicked');
+  getProjects() {
+    this.projectService.getUserProjects().subscribe((res) => {
+      this.projectList = res;
+    });
   }
 }

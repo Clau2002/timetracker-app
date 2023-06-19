@@ -16,9 +16,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
-import { Component } from '@angular/core';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -38,16 +37,13 @@ const MaterialComponents = [
   MatDialogModule,
   MatExpansionModule,
   MatTableModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    MaterialComponents
-  ],
-  exports: [
-    MaterialComponents
-  ]
+  imports: [MaterialComponents],
+  exports: [MaterialComponents],
 })
-export class MaterialModule { }
+export class MaterialModule {}

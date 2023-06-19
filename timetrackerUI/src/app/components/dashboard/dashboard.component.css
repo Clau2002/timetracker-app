@@ -1,144 +1,139 @@
 .dashboard-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 97vh;
-    background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  height: 97vh;
 }
 
 .header {
-    display: flex;
-    align-items: stretch;
-    /* flex-direction: row;
-    justify-content:space-between; */
-    width: 100%;
-    height: 100px;
-    background-color: gainsboro;
-    position: fixed;
-    /* border-radius: 20px; */
-    /* margin-right: 10px; */
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100px;
+  background-color: gainsboro;
+  position: sticky;
 }
 
 .timer {
-    display: flex;
-    align-items: center;
-    align-self: center;
-
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: darkorange;
-    width: 160px; */
-}
-
-.statistics-current-project {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-    background-color: green;
-}
-
-.current-project {
-    width: 65%;
-    align-self: flex-start;
-    height: 100%;
-    background-color: darkgray;
-}
-
-.statistics {
-    width: 35%;
-    align-self: flex-end;
-    height: 100%;
-    background-color: darkgray;
+  display: flex;
+  align-items: center;
+  align-self: center;
 }
 
 .header-input-form {
-    flex-basis: 50%;
-    display: flex;
-    align-items: center;
-    align-self: center;
-    /* width: 50%; */
-    /* height: 60px; */
-    margin-left: 20px;
-    margin-top: 40px;
+  flex-basis: 50%;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  /* width: 50%; */
+  /* height: 60px; */
+  margin-left: 20px;
+  margin-top: 40px;
 }
 
 .add-project-btn {
-    /* position: absolute; */
-    display: flex;
-    align-items: center;
-    align-self: center;
-    width: 40px;
-    height: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
-    /* margin-left: 30px;
+  /* position: absolute; */
+  display: flex;
+  align-items: center;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  /* margin-left: 30px;
     margin-top: 27px; */
-    background-color: #7fa8b5;
+  background-color: #7fa8b5;
 }
 
 .example-form {
-    max-width: 50px;
-    margin-left: 300px;
+  max-width: 50px;
+  margin-left: 300px;
 }
 
 mat-card-content {
-    text-align: center;
+  text-align: center;
 }
 
 .example-full-width {
-    max-width: 900px;
-    margin: auto;
-    width: 350px;
-
+  max-width: 900px;
+  margin: auto;
+  width: 350px;
 }
 
 h2 {
-    text-align: center;
-    margin-left: 350px;
+  text-align: center;
+  margin-left: 350px;
 }
 
 mat-card {
-    max-width: 800px;
-    /* margin-left: 300px; */
-    text-align: center;
-
+  max-width: 800px;
+  /* margin-left: 300px; */
+  text-align: center;
 }
 
 .closebtn {
-    width: 200px;
-    height: 50px;
-    margin-left: 100px;
-    top: 200px;
+  width: 200px;
+  height: 50px;
+  margin-left: 100px;
+  top: 200px;
 }
 
-/* .add-project-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-} */
-
 .add-project-form {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 mat-form-field {
-    width: 100%;
-    margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
+  background-color: #007bff;
+  color: #fff;
 }
 
 .container {
-    text-align: center;
-    /* font-family: Lato; */
-    display: flex;
-    align-items: center;
-    align-self: center;
+  text-align: center;
+  /* font-family: Lato; */
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.statistics-current-project {
+  display: flex;
+  width: 100%;
+}
+
+.current-project {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 72%;
+  height: 100%;
+  background-color: white;
+}
+
+.statistics {
+  width: 28%;
+  height: 100%;
+  background-color: rgb(94, 25, 25);
+}
+
+.example-card {
+  border-radius: 15px;
+  max-width: 400px;
+  margin: 10px;
+}
+
+.projectDesc {
+  padding: 5px 0;
+  text-align: justify;
+}
+
+mat-card-header {
+  padding: 8px 16px;
+  background-color: #7fa8b5;
+  color: white;
+  align-items: center;
 }

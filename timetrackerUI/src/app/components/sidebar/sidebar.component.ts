@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,10 +10,10 @@ import { UserService } from 'src/app/services/user.service';
 
 export class SidebarComponent {
   opened = true;
-  username?: string;
+  userName?: string;
 
-  constructor(userService: UserService) {
-    this.username = userService.user.username;
+  constructor(userService: UserService, private authService: AuthService) {
+    this.userName = authService.getUser().userName;
   }
 
   onClickProjects() {

@@ -17,6 +17,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
+import { ProjectService } from './services/project.service';
+import { ProjectDetailsComponent } from './components/project-details/project-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
     ProjectsComponent,
     ReportsComponent,
     AddProjectComponent,
-    StopwatchComponent
+    StopwatchComponent,
+    ProjectDetailsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,7 @@ import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
     NgxMatMomentModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, ProjectService, UserService],
   bootstrap: [AppComponent],
   entryComponents: [AddProjectComponent]
 })

@@ -6,5 +6,5 @@ export interface Project {
     name?: string;
     description?: string;
     status?: string;
-    stages?: Stage[];
+    stages?: Array<Stage>;
 }

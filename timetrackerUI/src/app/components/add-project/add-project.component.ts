@@ -91,7 +91,7 @@ export class AddProjectComponent implements OnInit {
         status: 'testing',
       }
 
-      var stagesData: Stage[] = [stageData];
+      var stagesData: Array<Stage> = [stageData];
 
       const projectData: Project = {
         userId: this._userId,
@@ -100,6 +100,8 @@ export class AddProjectComponent implements OnInit {
         status: 'Test',
         stages: stagesData
       };
+      // if(formData.stageName != '')
+      //   projectData.stages.concat(stageData);
       this.projectService.createProject(projectData).subscribe();
       this._snackBar.open('Project added', 'Close', {
         duration: 2000,

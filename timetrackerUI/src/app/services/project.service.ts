@@ -3,22 +3,20 @@ import { Project } from '../interfaces/project.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Stage } from '../interfaces/stage.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  // project: Project = {};
-
   constructor(private http: HttpClient) { }
 
-  getUserProjects() {
+  getUserProjects(): Observable<Project[]> {
     const idLS = parseInt(localStorage.getItem("userId"));
-    return this.http.get(environment.userManagement.baseUrl + 'projects/userId/' + idLS);
+    return this.http.get<Project[]>(environment.userManagement.baseUrl + 'projects/userId/' + idLS);
   }
 
   createProject(project: Project) {
-    // const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.post(environment.userManagement.baseUrl + 'projects/createProject', project);
   }
 
@@ -26,11 +24,11 @@ export class ProjectService {
     return this.http.get<Project>(environment.userManagement.baseUrl + 'projects/name/' + projectName);
   }
 
+  getProjectById(id: number): Observable<Project | undefined> {
+    return this.http.get<Project>(environment.userManagement.baseUrl + 'projects/id/' + id);
+  }
+
   createStage(stage: Stage) {
     return this.http.post(environment.userManagement.baseUrl + 'stages/createStage', stage);
   }
-
-  // createProject(project: Project) {
-  //   return this.http.post(environment.userManagement.baseUrl + 'projects/createProject', project);
-  // }
 }

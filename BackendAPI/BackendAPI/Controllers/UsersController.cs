@@ -47,6 +47,7 @@ namespace BackendAPI.Controllers
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             var userToReturn = _mapper.Map<UserDTO>(user);
+            userToReturn.Token = _tokenService.CreateToken(user);
             return userToReturn;
         }
 

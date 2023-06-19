@@ -1,15 +1,51 @@
 <div class="dashboard-wrapper">
-    <div class="header">
-        <mat-form-field appearance="fill" class="header-input-form">
-            <input matInput [(ngModel)]="newProjectName" placeholder="What project do you want to work on?">
-        </mat-form-field>
-        <button mat-fab color="primary" class="add-project-btn" (click)="openDialog()">
-            <mat-icon>add</mat-icon>
-        </button>
-        <app-stopwatch class="container"></app-stopwatch>
+  <div class="header">
+    <mat-form-field appearance="fill" class="header-input-form">
+      <input
+        matInput
+        placeholder="What project do you want to work on?"
+        #filter
+      />
+    </mat-form-field>
+    <button
+      mat-fab
+      type="button"
+      class="add-project-btn"
+      (click)="filterProjects(filter.value)"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button
+      mat-fab
+      color="primary"
+      class="add-project-btn"
+      (click)="openDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <app-stopwatch class="container"></app-stopwatch>
+  </div>
+
+  <div class="statistics-current-project">
+    <div class="current-project">
+      <mat-card class="example-card" *ngFor="let project of projectList">
+        <mat-card-header>
+          <mat-card-title> {{ project.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="projectDesc">{{ project.description }}</p>
+          <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>More</button>
+          <button mat-button>Edit</button>
+        </mat-card-actions>
+        <mat-card-footer>
+          <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+        </mat-card-footer>
+      </mat-card>
     </div>
-    <div class="statistics-current-project">
-        <div class="current-project"></div>
-        <div class="statistics"></div>
-    </div>
+    <div class="statistics"></div>
+  </div>
 </div>
