@@ -1,0 +1,36 @@
+<form (ngSubmit)="updateStage()" class="example-form" [formGroup]="stageForm">
+    <!-- <h1 mat-dialog-title>Add project</h1> -->
+    <div mat-dialog-content class="dialog-content">
+        <h2 class="stageTitle">Edit Stage</h2>
+        <div class="form-row">
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput name="name" placeholder="Enter stage name" formControlName="stageName" />
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Deadline</mat-label>
+                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                    formControlName="stageDeadline" />
+                <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #picker [showSeconds]="false" [showSpinners]="true">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Enter description" [(ngModel)]="newStage.description"
+                    formControlName="stageDescription"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-raised-button [mat-dialog-close]="" type="submit" cdkFocusInitial color="primary"
+            [disabled]="!stageForm.valid">
+            Edit Stage
+        </button>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+    </div>
+</form>

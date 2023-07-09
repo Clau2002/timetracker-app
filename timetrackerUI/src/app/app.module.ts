@@ -8,7 +8,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { MaterialModule } from './material/material.module';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { LogoutConfirmationDialogComponent, SidebarComponent } from './components/sidebar/sidebar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ReportsComponent } from './components/reports/reports.component';
@@ -19,8 +19,14 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
 import { ProjectService } from './services/project.service';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { DeleteAccountConfirmationDialogComponent, ProfileComponent } from './components/profile/profile.component';
 import { UserService } from './services/user.service';
+import { NgChartsModule } from 'ng2-charts';
+import { AddStageComponent } from './components/add-stage/add-stage.component';
+import { EditProjectComponent } from './components/edit-project/edit-project.component';
+import { EditStageComponent } from './components/edit-stage/edit-stage.component';
+import { AuthGuard } from './guards/auth.guard';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,13 @@ import { UserService } from './services/user.service';
     AddProjectComponent,
     StopwatchComponent,
     ProjectDetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddStageComponent,
+    EditProjectComponent,
+    EditStageComponent,
+    LogoutConfirmationDialogComponent,
+    DeleteAccountConfirmationDialogComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +58,10 @@ import { UserService } from './services/user.service';
     NgxMatTimepickerModule,
     NgxMatDatetimePickerModule,
     NgxMatMomentModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, ProjectService, UserService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, ProjectService, UserService, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [AddProjectComponent]
 })

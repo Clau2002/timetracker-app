@@ -9,6 +9,7 @@ using BackendAPI.Models;
 using BackendAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using BackendAPI.Interfaces;
+using BackendAPI.DTO;
 
 namespace BackendAPI.Controllers
 {
@@ -52,10 +53,23 @@ namespace BackendAPI.Controllers
             await _stageRepository.UpdateStageAsync(stage);
         }
 
+        [HttpPut("updateStatus")]
+        public async Task UpdateStageStatus(StageStatusDTO stage)
+        {
+            await _stageRepository.UpdateStageStatusAsync(stage);
+        }
+
         [HttpGet("getStageTime/{id}")]
         public async Task<TimeSpan> GetStageTotalTime(int id)
         {
             return await _stageRepository.GetStageTotalTimeSpentAsync(id);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task DeleteStage(int id)
+        {
+            await _stageRepository.DeleteStageAsync(id);
+            //return NoContent();
         }
     }
 }

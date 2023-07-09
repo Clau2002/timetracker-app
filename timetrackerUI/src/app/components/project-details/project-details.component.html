@@ -1,13 +1,9 @@
 <div class="top-header">
   <mat-toolbar>
-    <mat-button-toggle
-      value="left"
-      aria-label="Text align left"
-      [routerLink]="['/sidebar/projects']"
-    >
+    <mat-button-toggle value="left" aria-label="Text align left" [routerLink]="['/sidebar/projects']">
       <mat-icon>format_align_justify</mat-icon>
     </mat-button-toggle>
-    <h2 style="margin-top: 17px; color: #449">Timetracker</h2>
+    <h2 style="margin-top: 17px; color: #7fa8b5">Timetracker</h2>
     <div class="userName">
       {{ userName }}
     </div>
@@ -15,30 +11,94 @@
 </div>
 <div>
   <mat-card class="projectDetails">
-    <mat-card-header><h2>Project Details</h2></mat-card-header>
+    <mat-card-header class="ios-header">
+      <div class="project-header">
+        <div>
+          <h2>{{ project.name }}</h2>
+        </div>
+        <div>
+          <button mat-icon-button color="primary" aria-label="Edit Project" class="edit-project-button"
+            (click)="openEditProject()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" aria-label="Delete Project" class="delete-project-button"
+            (click)="deleteProject()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-header>
     <mat-card-content>
-      <p><strong>Name:</strong> {{ project.name }}</p>
+      <!-- <p><strong>Name:</strong> {{ project.name }}</p> -->
       <p><strong>Description:</strong> {{ project.description }}</p>
       <p><strong>Status:</strong> {{ project.status }}</p>
+      <p><strong>Time tracked:</strong> {{ projectTime }}</p>
       <hr />
-      <h2>Stages</h2>
+      <div class="stages-heading">
+        <h2>Stages</h2>
+        <div class="add-button-container">
+          <button mat-icon-button color="primary" aria-label="Add Stage" class="add-stage-button"
+            (click)="openDialog()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
       <div class="stages">
-      <mat-card *ngFor="let stage of project.stages" class="projectStage">
-        <mat-card-header
-          ><h4>{{ stage.name }}</h4></mat-card-header
-        >
-        <mat-card-content>
-          <p><strong>ID:</strong> {{ stage.id }}</p>
-          <p><strong>Project ID:</strong> {{ stage.projectId }}</p>
-          <p><strong>Description:</strong> {{ stage.description }}</p>
-          <p><strong>Status:</strong> {{ stage.status }}</p>
-          <p><strong>Deadline:</strong> {{ stage.deadline }}</p>
-          <!-- If you have time entries for each stage, you can display them as well -->
-        </mat-card-content>
-        <mat-card-footer>
-          <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
-        </mat-card-footer>
-      </mat-card>
+        <mat-card class="projectStage" *ngFor="let stage of project.stages"
+          [ngClass]="{ 'projectStage': true, 'completed': stage.status === 'Completed', 'canceled': stage.status === 'Canceled' }">
+          <mat-card-header class="ios-header">
+            <div class="project-header">
+              <div>
+                <h2>{{ stage.name }}</h2>
+              </div>
+              <div><button mat-icon-button color="primary" aria-label="Edit Stage" class="edit-project-button"
+                  style="padding: 0px;" (click)="openEditStage(stage.id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <div>
+                <button class="menu-button-container" mat-icon-button [matMenuTriggerFor]="stageMenu"
+                  aria-label="Stage Menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </div>
+              <mat-menu #stageMenu="matMenu">
+                <button mat-menu-item (click)="activateStage(stage)">
+                  Activate Stage
+                </button>
+                <button mat-menu-item (click)="deactivateStage(stage)">
+                  Deactivate Stage
+                </button>
+                <button mat-menu-item (click)="finishStage(stage)">
+                  Finish Stage
+                </button>
+                <button mat-menu-item (click)="cancelStage(stage)">
+                  Cancel Stage
+                </button>
+                <button mat-menu-item (click)="deleteStage(stage)">
+                  Delete Stage
+                </button>
+              </mat-menu>
+            </div>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>Description:</strong> {{ stage.description }}</p>
+            <p><strong>Status:</strong> {{ stage.status }}</p>
+            <p><strong>Deadline:</strong> {{ stage.deadline | date: 'dd/MM/yyyy hh:mm:ss a'}}</p>
+            <h5><strong>Time Entries:</strong></h5>
+            <ul>
+              <li *ngFor="let timeEntry of stage.timeEntries">
+                <p><strong>Start Time:</strong> {{ timeEntry.startTime | date: 'dd/MM/yyyy hh:mm:ss a' }}</p>
+                <p><strong>End Time:</strong> {{ timeEntry.endTime | date: 'dd/MM/yyyy hh:mm:ss a' }}</p>
+                <!-- You can display additional properties of the time entry as needed -->
+              </li>
+            </ul>
+            <!-- If you have time entries for each stage, you can display them as well -->
+          </mat-card-content>
+          <mat-card-footer>
+            <!-- <mat-progress-bar mode="determinate" value="50"></mat-progress-bar> -->
+          </mat-card-footer>
+        </mat-card>
       </div>
     </mat-card-content>
   </mat-card>

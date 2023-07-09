@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using BackendAPI.Interfaces;
 using AutoMapper;
 using BackendAPI.DTO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BackendAPI.Controllers
 {
@@ -67,5 +69,51 @@ namespace BackendAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("updatePassword")]
+        public async Task<ActionResult> UpdateUserPassword(UpdatedUserDTO updatedUserDTO)
+        {
+            var existingUser = await _userRepository.GetUserByIdAsync(updatedUserDTO.Id);
+
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            // Update the user properties
+            //existingUser.FirstName = updatedUserDTO.FirstName;
+            //existingUser.LastName = updatedUserDTO.LastName;
+            //existingUser.Email = updatedUserDTO.Email;
+
+            // Check if the password is being updated
+            if (!string.IsNullOrEmpty(updatedUserDTO.NewPassword))
+            {
+                // Generate a new salt
+                using var hmac = new HMACSHA512();
+
+                existingUser.PasswordSalt = hmac.Key;
+                existingUser.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(updatedUserDTO.NewPassword));
+            }
+
+            await _userRepository.UpdateUserAsync(existingUser);
+
+            return NoContent();
+        }
+
+        [HttpDelete("delete/id/{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userRepository.DeleteUserAsync(user);
+
+            return NoContent();
+        }
+
     }
 }

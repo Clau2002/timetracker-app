@@ -12,6 +12,10 @@ namespace BackendAPI.Interfaces
         Task<Project> CreateProjectAsync(Project projectDTO);
         Task<ICollection<Project>> GetProjectsByUserIdAync(int userId);
         Task UpdateProjectAsync(Project project);
-        Task<TimeSpan> GetTotalTimeSpentAsync(int projectId);
+        Task<string> GetTotalTimeSpentAsync(int projectId);
+        Task<string> GetTotalTimeSpentAsStringAsync(int projectId);
+        Task<string> GetTotalTimeSpentWhitoutDaysAsync(int projectId);
+        Task<int> GetProjectProgressAsync(string projectName);
+        Task DeleteProjectAsync(int id);
     }
 }

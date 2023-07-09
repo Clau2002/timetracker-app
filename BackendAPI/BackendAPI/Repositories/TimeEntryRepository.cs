@@ -31,6 +31,18 @@ namespace BackendAPI.Repositories
             return timeEntry;
         }
 
+        public async Task<ICollection<TimeEntry>> GetAllTimeEntriesByUserIdAsync(int userId)
+        {
+            var timeEntriesQuery = await (from user in _context.Users
+                                          join project in _context.Projects on user.Id equals project.UserId
+                                          join stage in _context.Stages on project.Id equals stage.ProjectId
+                                          join timeEntry in _context.TimeEntries on stage.Id equals timeEntry.StageId
+                                          where user.Id == userId
+                                          select timeEntry).ToListAsync();
+
+            return timeEntriesQuery;
+        }
+
 
         public async Task<ICollection<TimeEntry>> GetAllTimeEntriesByStageIdAsync(int stageId)
         {

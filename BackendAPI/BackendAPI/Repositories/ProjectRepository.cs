@@ -110,7 +110,7 @@ namespace BackendAPI.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task<TimeSpan> GetTotalTimeSpentAsync(int projectId)
+        public async Task<string> GetTotalTimeSpentAsync(int projectId)
         {
             var project = await _context.Projects
                 .Include(p => p.Stages)
@@ -127,7 +127,98 @@ namespace BackendAPI.Data
                 }
             }
 
-            return totalTime;
+            var totalHours = (int)totalTime.TotalHours;
+            var totalMinutes = totalTime.Minutes;
+            var totalSeconds = totalTime.Seconds;
+
+            return $"{totalHours:D2}{totalMinutes:D2}{totalSeconds:D2}";
+        }
+
+        public async Task<string> GetTotalTimeSpentAsStringAsync(int projectId)
+        {
+            var project = await _context.Projects
+                .Include(p => p.Stages)
+                    .ThenInclude(s => s.TimeEntries)
+                .FirstOrDefaultAsync(p => p.Id == projectId);
+
+            TimeSpan totalTime = TimeSpan.Zero;
+
+            foreach (var stage in project.Stages)
+            {
+                foreach (var timeEntry in stage.TimeEntries)
+                {
+                    totalTime += timeEntry.EndTime - timeEntry.StartTime;
+                }
+            }
+
+            var totalHours = (int)totalTime.TotalHours;
+            var totalMinutes = totalTime.Minutes;
+            var totalSeconds = totalTime.Seconds;
+
+            return $"{totalHours:D2}:{totalMinutes:D2}:{totalSeconds:D2}";
+        }
+
+        public async Task<string> GetTotalTimeSpentWhitoutDaysAsync(int projectId)
+        {
+            var project = await _context.Projects
+        .Include(p => p.Stages)
+            .ThenInclude(s => s.TimeEntries)
+        .FirstOrDefaultAsync(p => p.Id == projectId);
+
+            TimeSpan totalTime = TimeSpan.Zero;
+
+            foreach (var stage in project.Stages)
+            {
+                foreach (var timeEntry in stage.TimeEntries)
+                {
+                    totalTime += timeEntry.EndTime - timeEntry.StartTime;
+                }
+            }
+
+            return totalTime.ToString("hh\\:mm\\:ss");
+        }
+
+
+        public async Task<int> GetProjectProgressAsync(string projectName)
+        {
+            var project = await _context.Projects
+                .Include(p => p.Stages)
+                .FirstOrDefaultAsync(p => p.Name == projectName);
+
+            if (project == null)
+            {
+
+                return 0;
+            }
+
+            double completedStages = 2;
+            double totalStages = 4;
+            foreach (var stage in project.Stages)
+            {
+                if (stage.Status == "Completed")
+                {
+                    completedStages++;
+                }
+                totalStages++;
+            }
+
+            if (totalStages == 0)
+            {
+                return 0;
+            }
+
+            int progress = (int)((completedStages / (double)totalStages) * 100);
+            return progress;
+        }
+
+        public async Task DeleteProjectAsync(int id)
+        {
+            var project = await _context.Projects.FindAsync(id);
+            if (project != null)
+            {
+                _context.Projects.Remove(project);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task<bool> ProjectExists(string name)

@@ -35,6 +35,12 @@ namespace BackendAPI.Controllers
             return await _timeEntryRepository.GetTimeEntryByIdAsync(id);
         }
 
+        [HttpGet("userId/{userId}")]
+        public async Task<ICollection<TimeEntry>> GetAllTimeEntriesByUserId(int userId)
+        {
+            return await _timeEntryRepository.GetAllTimeEntriesByUserIdAsync(userId);
+        }
+
         [HttpGet("stageId/{stageId}")]
         public async Task<ICollection<TimeEntry>> GetTimeEntriesByStageId(int stageId)
         {

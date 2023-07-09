@@ -60,9 +60,34 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("getTotalTime/{id}")]
-        public async Task<TimeSpan> GetTotalTime(int id)
+        public async Task<string> GetTotalTime(int id)
         {
             return await _projectRepository.GetTotalTimeSpentAsync(id);
+        }
+
+        [HttpGet("getTotalTimeAsString/{id}")]
+        public async Task<string> GetTotalTimeSpentAsString(int id)
+        {
+            return await _projectRepository.GetTotalTimeSpentAsStringAsync(id);
+        }
+
+        [HttpGet("getTotalTimeWithoutDays/{id}")]
+        public async Task<string> GetTotalTimeWithoutDays(int id)
+        {
+            return await _projectRepository.GetTotalTimeSpentWhitoutDaysAsync(id);
+        }
+
+        [HttpGet("getProgress/{name}")]
+        public async Task<int> GetProjectProgress(string projectName)
+        {
+            return await _projectRepository.GetProjectProgressAsync(projectName);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task DeleteProject(int id)
+        {
+            await _projectRepository.DeleteProjectAsync(id);
+            //return NoContent();
         }
     }
 }

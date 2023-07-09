@@ -9,5 +9,5 @@ export interface Stage {
     description?: string;
     status?: string;
     deadline?: string;
-    timeentries?:TimeEntry[];
+    timeEntries?:TimeEntry[];
 }

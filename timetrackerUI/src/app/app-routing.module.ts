@@ -7,12 +7,13 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: 'auth', component: AuthComponent },
   {
-    path: 'sidebar', component: SidebarComponent, children: [
+    path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'projects', component: ProjectsComponent },
@@ -20,7 +21,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent }
     ]
   },
-  { path: 'projectDetails/:id', component: ProjectDetailsComponent}
+  { path: 'projectDetails/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

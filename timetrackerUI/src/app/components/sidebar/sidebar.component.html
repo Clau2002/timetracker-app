@@ -1,35 +1,60 @@
 <div style="position:fixed; width: 100%;">
-    <mat-toolbar>
+    <mat-toolbar class="toolbar">
         <mat-button-toggle value="left" aria-label="Text align left" (click)="opened = !opened">
             <mat-icon>format_align_justify</mat-icon>
         </mat-button-toggle>
-        <h2 style="margin-top: 17px; color: #449;">Timetracker</h2>
-        <div class="userName">
-            {{ userName }}
+        <h2 style="margin-top: 17px; color: #7fa8b5;">Timetracker</h2>
+        <div class="toolbar-right">
+            <div class="userName">
+                <div class="userImage">
+                    <span>{{ userInitials }}</span>
+                </div>
+                <!-- <span class="userNameText">{{ userName }}</span> -->
+            </div>
+            <button mat-icon-button color="primary" aria-label="User Menu" class="user-menu-button"
+                [matMenuTriggerFor]="userMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="openLogoutConfirmationDialog()">
+                    Logout
+                </button>
+                <button mat-menu-item [routerLink]="['profile']">
+                    Settings
+                </button>
+            </mat-menu>
         </div>
     </mat-toolbar>
 
     <mat-sidenav-container>
         <mat-sidenav mode="side" [(opened)]="opened">
-                <mat-nav-list>
-                    <a mat-list-item class="left-align-dashboard-item" routerLink="dashboard">
-                        <mat-icon>home</mat-icon> Dashboard
-                    </a>
-                    <mat-divider></mat-divider>
-                    <a mat-list-item routerLink="projects" class="left-align-dashboard-item">
-                        <mat-icon>description</mat-icon> Projects
-                    </a>
-                    <a mat-list-item routerLink="reports" class="left-align-dashboard-item">
-                        <mat-icon>bar_chart</mat-icon> Reports
-                    </a>
-                    <mat-divider></mat-divider>
-                    <!-- <a mat-list-item routerLink="settings" class="left-align-dashboard-item">
+            <mat-nav-list>
+                <a mat-list-item class="left-align-dashboard-item" routerLink="dashboard">
+                    <mat-icon>home</mat-icon> Dashboard
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-list-item routerLink="projects" class="left-align-dashboard-item">
+                    <mat-icon>description</mat-icon> Projects
+                </a>
+                <a mat-list-item routerLink="reports" class="left-align-dashboard-item">
+                    <mat-icon>bar_chart</mat-icon> Reports
+                </a>
+                <mat-divider></mat-divider>
+                <!-- <a mat-list-item routerLink="settings" class="left-align-dashboard-item">
                         <mat-icon>settings</mat-icon> Settings
                     </a> -->
-                    <a mat-list-item routerLink="profile" class="left-align-dashboard-item">
-                        <mat-icon>account_circle</mat-icon> Profile
+                <a mat-list-item routerLink="profile" class="left-align-dashboard-item">
+                    <mat-icon>account_circle</mat-icon> Profile
+                </a>
+            </mat-nav-list>
+            <div class="sidebar-bottom">
+                <div class="center-align">
+                    <!-- <mat-divider></mat-divider> -->
+                    <a mat-button style="font-size: 16px;" (click)="openLogoutConfirmationDialog()">
+                        <mat-icon>exit_to_app</mat-icon> Logout
                     </a>
-                </mat-nav-list>
+                </div>
+            </div>
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="scrollable-content">

@@ -15,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 export class AuthComponent {
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private _snackBar: MatSnackBar) { }
 
@@ -25,6 +26,7 @@ export class AuthComponent {
         this.authService.login(form.value).subscribe({
           next: async (res: any) => {
             form.reset();
+            this.userService.updateUserName(res.userName);
             this.authService.storeToken(res.token, res.id);
             this.authService.storeUser(res);
             this._snackBar.open('Login Successful', 'Dismiss', {
@@ -45,9 +47,11 @@ export class AuthComponent {
       }
       else {
         this.authService.register(form.value).subscribe({
-          next: (res: any) => {
+          next: async (res: any) => {
             form.reset();
+            // this.authService.storeToken(res.token, res.id);
             this.authService.storeToken(res.token, res.id);
+            this.authService.storeUser(res);
             this._snackBar.open('Registration Successful', 'Dismiss', {
               duration: 3000,
               horizontalPosition: 'center',

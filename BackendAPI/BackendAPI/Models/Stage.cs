@@ -16,7 +16,7 @@ namespace BackendAPI.Models
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         [Required]

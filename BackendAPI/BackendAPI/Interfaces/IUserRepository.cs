@@ -8,5 +8,6 @@ namespace BackendAPI.Interfaces
         Task<User> GetUserByIdAsync(int id);
         Task<User> GetUserByUsernameAsync(string username);
         Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(User user);
     }
 }

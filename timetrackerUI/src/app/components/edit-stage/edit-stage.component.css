@@ -1,0 +1,47 @@
+.example-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-row {
+    display: flex;
+    /* justify-content: space-between; */
+    margin-bottom: -10px;
+  }
+  
+  .add-stage {
+    display: flex;
+    margin: 5px;
+    justify-content: flex-end;
+  }
+  
+  .stageTitle {
+    font-weight: 700;
+  }
+  
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+    height: 100%;
+  }
+  
+  .form-field {
+    width: 100%;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  @media (max-width: 600px) {
+    .form-field {
+      width: 100%;
+    }
+  }
+  

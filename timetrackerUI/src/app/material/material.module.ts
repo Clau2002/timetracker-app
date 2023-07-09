@@ -18,6 +18,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ProgressSpinnerMode, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -39,6 +41,8 @@ const MaterialComponents = [
   MatTableModule,
   MatNativeDateModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatMenuModule
 ];
 
 @NgModule({
@@ -46,4 +50,4 @@ const MaterialComponents = [
   imports: [MaterialComponents],
   exports: [MaterialComponents],
 })
-export class MaterialModule {}
+export class MaterialModule { }

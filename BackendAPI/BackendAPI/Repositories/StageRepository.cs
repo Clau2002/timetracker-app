@@ -1,4 +1,5 @@
-﻿using BackendAPI.Interfaces;
+﻿using BackendAPI.DTO;
+using BackendAPI.Interfaces;
 using BackendAPI.Models;
 using BackendAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -90,6 +91,39 @@ namespace BackendAPI.Data
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateStageStatusAsync(StageStatusDTO stage)
+        {
+            var existingStage = await _context.Stages.FindAsync(stage.Id);
+
+            if (existingStage != null)
+            {
+                // Update the status of the existing stage
+                existingStage.Status = stage.Status;
+
+                // Check if the status is being updated to "Active"
+                if (stage.Status == "Active")
+                {
+                    // Find other stages of the project and set their status to "Inactive"
+                    var projectId = existingStage.ProjectId;
+                    var projectStages = await _context.Stages.Where(s => s.ProjectId == projectId).ToListAsync();
+
+                    foreach (var projectStage in projectStages)
+                    {
+                        // Skip the current stage being updated
+                        if (projectStage.Id != existingStage.Id)
+                        {
+                            projectStage.Status = "Inactive";
+                            _context.Stages.Update(projectStage);
+                        }
+                    }
+                }
+
+                // Save the changes
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
         public async Task<TimeSpan> GetStageTotalTimeSpentAsync(int stageId)
         {
             var stage = await _context.Stages
@@ -104,6 +138,16 @@ namespace BackendAPI.Data
             }
 
             return totalTime;
+        }
+
+        public async Task DeleteStageAsync(int id)
+        {
+            var stage = await _context.Stages.FindAsync(id);
+            if (stage != null)
+            {
+                _context.Stages.Remove(stage);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task<bool> StageExists(string name)

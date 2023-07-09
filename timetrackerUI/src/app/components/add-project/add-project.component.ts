@@ -21,11 +21,11 @@ interface StageNames {
   viewValue: string;
 }
 
-enum StageName {
-  ToDo = 'To Do',
-  Implementation = 'Implementation',
-  Done = 'Done'
-}
+// enum StageName {
+//   ToDo = 'To Do',
+//   Implementation = 'Implementation',
+//   Done = 'Done'
+// }
 
 @Component({
   selector: 'app-add-project',
@@ -44,11 +44,12 @@ export class AddProjectComponent implements OnInit {
   showAddProjectForm: boolean = false;
   userDataSubscription: Subscription;
   selectedValue: string;
-  stageNames: StageNames[] = [
-    { value: StageName.ToDo, viewValue: 'To Do' },
-    { value: StageName.Implementation, viewValue: 'Implementation' },
-    { value: StageName.Done, viewValue: 'Done' }
-  ];
+  // stageNames: StageNames[] = [
+  //   { value: StageName.ToDo, viewValue: 'To Do' },
+  //   { value: StageName.Implementation, viewValue: 'Implementation' },
+  //   { value: StageName.Done, viewValue: 'Done' }
+  // ];
+  // stageName = '';
   stageDeadline = new FormControl();
 
   projectForm = new FormGroup({
@@ -83,12 +84,12 @@ export class AddProjectComponent implements OnInit {
       this.dialogRef.close();
       const formData = this.projectForm.value;
       const selectedDeadline = formData.stageDeadline;
-      const localDedline = moment(selectedDeadline).local().format();
+      const localDeadline = moment(selectedDeadline).local().format();
       const stageData: Stage = {
         name: formData.stageName,
-        deadline: localDedline,
+        deadline: localDeadline,
         description: formData.stageDescription,
-        status: 'testing',
+        status: 'Inactive',
       }
 
       var stagesData: Array<Stage> = [stageData];
@@ -97,7 +98,7 @@ export class AddProjectComponent implements OnInit {
         userId: this._userId,
         name: formData.projectName,
         description: formData.projectDescription,
-        status: 'Test',
+        status: 'Inactive',
         stages: stagesData
       };
       // if(formData.stageName != '')

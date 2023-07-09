@@ -1,4 +1,5 @@
-﻿using BackendAPI.Models;
+﻿using BackendAPI.DTO;
+using BackendAPI.Models;
 
 namespace BackendAPI.Interfaces
 {
@@ -10,6 +11,8 @@ namespace BackendAPI.Interfaces
         Task<ICollection<Stage>> GetStagesByProjectIdAsync(int projectId);
         Task<Stage> CreateStageAsync(Stage stage);
         Task UpdateStageAsync(Stage stage);
+        Task UpdateStageStatusAsync(StageStatusDTO stage);
         Task<TimeSpan> GetStageTotalTimeSpentAsync(int stageId);
+        Task DeleteStageAsync(int id);
     }
 }

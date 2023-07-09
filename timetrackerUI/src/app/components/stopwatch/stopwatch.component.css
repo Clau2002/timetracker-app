@@ -18,7 +18,8 @@
 .timer-button {
     outline: none;
     cursor: pointer;
-    border: 1px solid #007bff;
+    /* border: 1px solid #007bff; */
+    border: none;
     border-radius: 5px;
     background: #007bff;
     color: #fff;
@@ -43,14 +44,4 @@
     cursor: not-allowed;
     background-color: #5a6268;
     border: 1px solid #545b62;
-}
-
-.blink {
-    animation: blinker 1s linear infinite;
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
 }

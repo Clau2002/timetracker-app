@@ -17,6 +17,7 @@
 .example-card {
   max-width: 350px;
   margin: 10px;
+  border-radius: 6px;
 }
 
 .projectDesc {
@@ -34,4 +35,14 @@ mat-card-header {
 .projects-container {
   display: flex;
   flex-direction: column;
+}
+
+.ios-header {
+  padding: 8px 16px;
+  background-color: #7fa8b5;
+  color: whitesmoke;
+  align-items: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #E8E8E8;
 }

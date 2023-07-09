@@ -28,6 +28,9 @@ mat-card-header {
   background-color: #7fa8b5;
   color: white;
   align-items: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #E8E8E8;
 }
 
 mat-card-content {
@@ -37,10 +40,102 @@ mat-card-content {
 .projectStage {
   width: 400px;
   margin-right: 20px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.menu-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media only screen and (min-width:900px ) {
+  .projectStage {
+    width: 350px;
+  }
 }
 
 .stages {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
 }
+
+.stages-heading {
+  display: flex;
+  align-items: center;
+}
+
+.stages-heading h2 {
+  margin-right: 10px;
+}
+
+.add-stage-button {
+  margin-left: -8px;
+  margin-bottom: 17px;
+}
+
+.project-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-project-button {
+  margin-left: 5px;
+  margin-bottom: 17px;
+  color: white;
+}
+
+.stage-menu {
+  display: flex;
+}
+
+.stage-action-button {
+  margin-left: 10px;
+}
+
+.menu-button-container {
+  margin-bottom: 17px;
+}
+
+/* Add your existing CSS rules */
+
+/* Styling for the completed stages */
+.projectStage.completed {
+  opacity: 0.6;
+}
+
+/* Styling for the canceled stages */
+.projectStage.canceled {
+  opacity: 0.6;
+  background-color: #f44336;
+  color: white;
+}
+
+/* Styling for the stage name in completed or canceled stages */
+.projectStage.completed h2,
+.projectStage.canceled h2 {
+  text-decoration: line-through;
+}
+
+/* Styling for the edit stage button in completed or canceled stages */
+.projectStage.completed .edit-project-button,
+.projectStage.canceled .edit-project-button {
+  display: none;
+}
+
+/* Styling for the stage menu button in completed or canceled stages */
+.projectStage.completed .menu-button-container button,
+.projectStage.canceled .menu-button-container button {
+  display: none;
+}
+
+/* .ios-header {
+  background-color: #7fa8b5;
+  color: whitesmoke;
+  align-items: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #E8E8E8;
+} */

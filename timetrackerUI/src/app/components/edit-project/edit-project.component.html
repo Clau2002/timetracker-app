@@ -1,0 +1,36 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="example-form">
+  <div mat-dialog-content class="dialog-content">
+    <h2 class="projectTitle">Edit Project</h2>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Project Name</mat-label>
+        <input matInput name="name" placeholder="Enter project name" formControlName="projectName" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput name="description" placeholder="Enter description"
+          formControlName="projectDescription"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- <div>
+    <label for="status">Status:</label>
+    <select id="status" formControlName="projectStatus">
+      <option value="">-- Select Status --</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+  </div> -->
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-raised-button [mat-dialog-close]="" type="submit" cdkFocusInitial color="primary"
+      [disabled]="!editForm.valid">
+      Edit Project
+    </button>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+  </div>
+</form>
